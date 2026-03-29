@@ -24,6 +24,8 @@ import '../Shared_Data/LocationData.dart';
 import '../Shared_View/AlertView.dart';
 import '../Shared_View/AppBarView.dart';
 import '../Shared_View/DrawerView.dart';
+import 'dart:ui' as ui;
+import 'package:flutter/services.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -62,8 +64,7 @@ class _MapScreenState extends State<MapScreen> {
                   pin.lng
               ),
               onTap: () => _onMarkerTapped(MarkerId(pin.id.toString()), pin),
-              icon: await BitmapDescriptor.fromAssetImage(
-                  ImageConfiguration(), "lib/assets/pin_y.png"),
+              icon: await getMarkerIcon("lib/assets/pin_y.png", 60),
               infoWindow: InfoWindow(title: pin.name)
           );
 
@@ -95,6 +96,18 @@ class _MapScreenState extends State<MapScreen> {
   }
 
 
+  Future<BitmapDescriptor> getMarkerIcon(String path, int width) async {
+    final ByteData data = await rootBundle.load(path);
+    final codec = await ui.instantiateImageCodec(
+      data.buffer.asUint8List(),
+      targetWidth: width, // 👈 هنا بتتحكمي في الحجم
+    );
+    final frame = await codec.getNextFrame();
+    final byteData = await frame.image.toByteData(format: ui.ImageByteFormat.png);
+
+    return BitmapDescriptor.fromBytes(byteData!.buffer.asUint8List());
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -110,17 +123,18 @@ class _MapScreenState extends State<MapScreen> {
               markers.containsKey(previousMarkerId)) {
             final Marker? resetOld = markers[previousMarkerId];
             markers[previousMarkerId] = resetOld!;
-            _getAssetIcon(context, "pin_y").then(
+            getMarkerIcon("lib/assets/pin_y.png", 60).then(
                   (BitmapDescriptor icon) {
                 _setMarkerIcon(previousMarkerId, icon);
               },
             );
+
           }
           selectedMarker = int.parse(markerId.value);
           selectedPin = pin;
           final Marker newMarker = tappedMarker;
           markers[markerId] = newMarker;
-          _getAssetIcon(context, "pin_b").then(
+          getMarkerIcon("lib/assets/pin_b.png", 90).then(
                 (BitmapDescriptor icon) {
               _setMarkerIcon(markerId, icon);
             },
@@ -144,27 +158,6 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
-  Future<BitmapDescriptor> _getAssetIcon(BuildContext context,String _AssetImage) async {
-    final Completer<BitmapDescriptor> bitmapIcon =
-    Completer<BitmapDescriptor>();
-    final ImageConfiguration config = createLocalImageConfiguration(context);
-
-     AssetImage('lib/assets/'+_AssetImage+'.png')
-        .resolve(config)
-        .addListener(ImageStreamListener((ImageInfo image, bool sync) async {
-      final ByteData? bytes =
-      await image.image.toByteData(format: ImageByteFormat.png);
-      if (bytes == null) {
-        bitmapIcon.completeError(Exception('Unable to encode icon'));
-        return;
-      }
-      final BitmapDescriptor bitmap =
-      BitmapDescriptor.fromBytes(bytes.buffer.asUint8List());
-      bitmapIcon.complete(bitmap);
-    }));
-
-    return await bitmapIcon.future;
-  }
 
   @override
   Widget build(BuildContext context) {
