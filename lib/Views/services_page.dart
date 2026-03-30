@@ -49,6 +49,7 @@ class _ServicesPageState extends State<ServicesPage> {
             child: Container(
                 height: double.infinity,
                 width: double.infinity,
+                color: Style.WhiteColor,
                 child: GestureDetector(
                   onTap: () {
                     FocusScope.of(context).requestFocus(new FocusNode());
@@ -58,15 +59,17 @@ class _ServicesPageState extends State<ServicesPage> {
   }
   FormUI() {
     if (data != null && data.length > 0) {
+      bool isTablet = MediaQuery.of(context).size.width > 600;
+
       return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 5.0.w, vertical: 5.0.h),
+          padding: EdgeInsets.symmetric(horizontal: 2.0.w, vertical: 2.0.h),
           child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200,
-                  mainAxisExtent: 20.0.h,
-                  childAspectRatio: 3 / 2,
-                  crossAxisSpacing: 10.0.w,
-                  mainAxisSpacing: 4.0.h),
+             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+               crossAxisCount: 2, // 👈 دايمًا 2
+               childAspectRatio: isTablet ? 1.3 : 1, // 👈 نزبط الشكل على iPad
+               crossAxisSpacing: isTablet ? 20 : 10,
+               mainAxisSpacing: 20 ,
+             ),
               itemCount: data.length,
               itemBuilder: (BuildContext ctx, index) {
                 return InkWell(

@@ -178,7 +178,7 @@ DrawerList(BuildContext context,{int id=0})
              ),
               Drawer_Items((DelegateData.delegateData==null||DelegateData.delegateData!.id!<0)?Icons.login:Icons.logout,
                   (DelegateData.delegateData==null||DelegateData.delegateData!.id!<0)?Translations.of(context)!.Login_btn: Translations.of(context)!.Log_out, context, "loginRoute"),
-             Padding(padding: EdgeInsets.all(1.5.h)),
+             Padding(padding: EdgeInsets.all(3.5.h)),
            ],
          ),
        ),)
@@ -192,23 +192,29 @@ DrawerList(BuildContext context,{int id=0})
    );
  }
 
-Drawer_Items(IconData icon,String name, BuildContext context, String route)
-{
-  return   ListTile(
-       leading:  Icon(icon,size: 4.0.h,color: Style.SecondryColor,),
-        title: Text(
-            name,
-            style: TextStyle(
-                color: Style.MainTextColor, fontSize: 16.0.sp, fontWeight: FontWeight.bold)
-        ),
-        onTap: () {
+Space(isTablet) {
+  return SizedBox(height: isTablet?1.0.h:0.2.h,);
+}
 
-         if(route != null && route.isNotEmpty)
+Drawer_Items(IconData icon,String name, BuildContext context, String route) {
+
+  bool isTablet = MediaQuery.of(context).size.width > 600;
+  return Column(children: [ ListTile(
+      leading: Icon(icon, size: 4.0.h, color: Style.SecondryColor,),
+      title: Text(
+          name,
+          style: TextStyle(
+              color: Style.MainTextColor,
+              fontSize: 16.0.sp,
+              fontWeight: FontWeight.bold)
+      ),
+      onTap: () {
+        if (route != null && route.isNotEmpty)
           Drawer_itemTab(context, route);
-        }
+      }
 
-  );
-
+  ), Space(isTablet),
+  ]);
 }
 
 ExpansionTile_Items(String name,BuildContext context, String route)

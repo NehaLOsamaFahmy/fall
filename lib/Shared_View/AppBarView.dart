@@ -20,15 +20,19 @@ import '../Routes/route_constants.dart';
      ),
      toolbarHeight: 8.0.h,
      elevation: 0,
+     leadingWidth: 14.0.w,
      leading: Builder(
-       builder: (context) =>
-           IconButton(
-             alignment: Alignment.center,
-             icon: Padding(
-                 padding: EdgeInsets.fromLTRB(1.5.w, 1.5.h, 1.5.w, 0),
-                 child: Icon(Icons.menu,size: 4.0.h,color: Colors.white,)),
-             onPressed: () => Scaffold.of(context).openDrawer(),
+       builder: (context) => Padding(
+         padding: const EdgeInsets.only(left: 8),
+         child: IconButton(
+           icon: Icon(
+             Icons.menu,
+             size: 4.0.h,
+             color: Colors.white,
            ),
+           onPressed: () => Scaffold.of(context).openDrawer(),
+         ),
+       ),
      ),
      actions: <Widget>[
        ScopedModelDescendant<AppModel>(
@@ -49,6 +53,7 @@ import '../Routes/route_constants.dart';
 
  AppBarWithBack(BuildContext context, String header) {
    return AppBar(
+     elevation: 0,
      centerTitle: true,
      title: Text(header,style: Style.Header2,),
      flexibleSpace: Container(
@@ -56,14 +61,16 @@ import '../Routes/route_constants.dart';
      ),
      toolbarHeight: 8.0.h,
 
+     leadingWidth: 14.w,
      leading: Builder(
-       builder: (context) =>
-           IconButton(
-             icon: Icon(Icons.menu, size: Style.SizeIconAppBar,
-                 color: Style.WhiteColor),
-             onPressed: () => Scaffold.of(context).openDrawer(),
+         builder: (context) =>IconButton(
+           icon: Icon(
+             Icons.menu,
+             size: 4.h,
+             color: Colors.white,
            ),
-     ),
+           onPressed: () => Scaffold.of(context).openDrawer(),
+         )),
      actions: <Widget>[
        Padding(
            padding: EdgeInsets.all(1.5.w),

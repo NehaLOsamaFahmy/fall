@@ -40,6 +40,7 @@ class _HomePageState extends State<HomePage> {
   }
   @override
   Widget build(BuildContext context) {
+    double navHeight = MediaQuery.of(context).size.width > 600 ? 10.0.h : 9.0.h;
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: Style.MainColor,
@@ -51,11 +52,12 @@ class _HomePageState extends State<HomePage> {
       //appBar: AppBarWithlanguage(context, _pageTitle),
       //drawer: DrawerList(context),
       bottomNavigationBar: CurvedNavigationBar(
+        height: navHeight,
         key: _bottomNavigationKey,
         index: 0,
         items: [
           CurvedNavigationBarItem(
-            child: Icon(Icons.home_outlined,color: Style.WhiteColor,),
+            child: Icon(Icons.home_outlined,color: Style.WhiteColor,size: 4.0.h,),
             labelStyle: TextStyle(color: Colors.white, fontSize: 16.0.sp, fontWeight: FontWeight.bold),
             label: Translations.of(context)!.Home_page,
           ),
@@ -65,7 +67,7 @@ class _HomePageState extends State<HomePage> {
             label: Translations.of(context)!.Requests,
           ),*/
           CurvedNavigationBarItem(
-            child: Icon(Icons.location_on_outlined,color: Style.WhiteColor,),
+            child: Icon(Icons.location_on_outlined,color: Style.WhiteColor,size: 4.0.h,),
             labelStyle: TextStyle(color: Colors.white, fontSize: 16.0.sp, fontWeight: FontWeight.bold),
             label: Translations.of(context)!.Station_locations,
           ),
@@ -75,7 +77,7 @@ class _HomePageState extends State<HomePage> {
             label: Translations.of(context)!.Station_maintenance,
           ),*/
           CurvedNavigationBarItem(
-            child: Icon(Icons.settings ,color: Style.WhiteColor,),
+            child: Icon(Icons.settings ,color: Style.WhiteColor,size: 4.0.h,),
             labelStyle: TextStyle(color: Colors.white, fontSize: 16.0.sp, fontWeight: FontWeight.bold),
             label: Translations.of(context)!.Services,
           ),
