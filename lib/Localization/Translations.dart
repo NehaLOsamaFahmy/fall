@@ -857,6 +857,42 @@ String get enter_amount {
       name: 'ScanQrcode',
     );
   }
+  String get delete_account {
+    return Intl.message(
+      'delete_account',
+      name: 'delete_account',
+    );
+  }
+  String get warning {
+    return Intl.message(
+      'warning',
+      name: 'warning',
+    );
+  }
+  String get delete_msg {
+    return Intl.message(
+      'delete_msg',
+      name: 'delete_msg',
+    );
+  }
+  String get delete_msg1 {
+    return Intl.message(
+      'delete_msg1',
+      name: 'delete_msg1',
+    );
+  }
+  String get delete_msg2 {
+    return Intl.message(
+      'delete_msg2',
+      name: 'delete_msg2',
+    );
+  }
+  String get delete_msg3 {
+    return Intl.message(
+      'delete_msg3',
+      name: 'delete_msg3',
+    );
+  }
 
 
 }

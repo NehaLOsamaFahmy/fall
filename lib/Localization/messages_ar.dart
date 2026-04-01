@@ -159,5 +159,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "edit_data": MessageLookupByLibrary.simpleMessage("تعديل بيانات"),
     "new_noData":MessageLookupByLibrary.simpleMessage("لا يمكن التعديل لا يوجد بيانات جديدة"),
     "ScanQrcode":MessageLookupByLibrary.simpleMessage("امسح الرمز"),
+    "delete_account":MessageLookupByLibrary.simpleMessage("حذف الحساب"),
+    "warning":MessageLookupByLibrary.simpleMessage("تحذير"),
+    "delete_msg":MessageLookupByLibrary.simpleMessage("عند حذف حسابك سيتم حذف جميع البيانات المرتبطة به ولا يمكن استرجاعها مرة أخرى."),
+    "delete_msg1":MessageLookupByLibrary.simpleMessage("حذف الحساب نهائيا."),
+    "delete_msg2":MessageLookupByLibrary.simpleMessage("تأكيد الحذف"),
+    "delete_msg3":MessageLookupByLibrary.simpleMessage("هل أنت متأكد أنك تريد حذف الحساب؟ لا يمكن التراجع عن هذا الإجراء."),
+
   };
 }

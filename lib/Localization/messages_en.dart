@@ -158,5 +158,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "edit_data": MessageLookupByLibrary.simpleMessage("ُEdit Data"),
     "new_noData":MessageLookupByLibrary.simpleMessage("Can't edit No new data"),
     "ScanQrcode":MessageLookupByLibrary.simpleMessage("Scan Qr code"),
+    "delete_account":MessageLookupByLibrary.simpleMessage("Delete Account"),
+    "warning":MessageLookupByLibrary.simpleMessage("Warning"),
+    "delete_msg":MessageLookupByLibrary.simpleMessage("When you delete your account, all associated data will be deleted and cannot be recovered."),
+    "delete_msg1":MessageLookupByLibrary.simpleMessage("Delete Account"),
+    "delete_msg2":MessageLookupByLibrary.simpleMessage("Confirm deletion"),
+    "delete_msg3":MessageLookupByLibrary.simpleMessage("Are you sure you want to delete the account? This action cannot be reversed."),
+
   };
 }

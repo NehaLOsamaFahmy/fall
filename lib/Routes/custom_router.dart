@@ -19,6 +19,7 @@ import '../Views/StationReviewsPage.dart';
 import '../Views/StationTransportationPage.dart';
 import '../Views/about_us_page.dart';
 import '../Views/contact_us_page.dart';
+import '../Views/deleteAccountPage.dart';
 import '../Views/location_station.dart';
 import '../Views/loyalty_page.dart';
 import '../Views/map_location_page.dart';
@@ -59,6 +60,8 @@ class CustomRouter {
         }
       case homeRoute:
         return MaterialPageRoute(builder: (_) => HomePage());
+      case deleteAccountRoute:
+        return MaterialPageRoute(builder: (_) => deleteAccountPage());
       case splashRoute:
         return MaterialPageRoute(builder: (_) => SplashPage());
       case BalanceRoute:

@@ -176,6 +176,9 @@ DrawerList(BuildContext context,{int id=0})
 
                ),
              ),
+             if(DelegateData.delegateData!= null && DelegateData.delegateData!.id!>0)
+               Drawer_Items(Icons.delete_forever_sharp, Translations.of(context)!.delete_account, context,
+                 deleteAccountRoute),
               Drawer_Items((DelegateData.delegateData==null||DelegateData.delegateData!.id!<0)?Icons.login:Icons.logout,
                   (DelegateData.delegateData==null||DelegateData.delegateData!.id!<0)?Translations.of(context)!.Login_btn: Translations.of(context)!.Log_out, context, "loginRoute"),
              Padding(padding: EdgeInsets.all(3.5.h)),
@@ -208,6 +211,7 @@ Drawer_Items(IconData icon,String name, BuildContext context, String route) {
               fontSize: 16.0.sp,
               fontWeight: FontWeight.bold)
       ),
+
       onTap: () {
         if (route != null && route.isNotEmpty)
           Drawer_itemTab(context, route);

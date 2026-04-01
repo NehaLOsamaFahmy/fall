@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:scoped_model/scoped_model.dart';
 
@@ -14,6 +15,8 @@ import 'Shared_Data/CompanyData.dart';
 import 'Shared_Data/DelegateData.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'ViewModel/LoginViewModel.dart';
 
 
 
@@ -59,6 +62,11 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<AppModel>(
         builder: (context, child, model) =>
+            MultiProvider(
+                providers: [
+                  ChangeNotifierProvider(create: (_)=> LoginViewModel()),
+                 ],
+                child:
             Sizer(
                 builder: (context, orientation, deviceType) {
                   return
@@ -84,7 +92,7 @@ class _MyAppState extends State<MyApp> {
                 }
             )
 
-    );
+            )    );
   }
 }
 

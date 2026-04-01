@@ -65,6 +65,7 @@ dependencies:
   flutter_image_compress: ^2.4.0
   rflutter_alert: ^2.0.7
   loading_overlay: ^0.3.0
+  provider: ^6.1.2
 
 
 dev_dependencies:
