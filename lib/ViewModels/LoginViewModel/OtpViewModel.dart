@@ -62,13 +62,13 @@ class OtpViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      await Verifycode(context, data.mobile??"", otpController.text).then((res) {
+     var res= await Verifycode(context, data.mobile??"", otpController.text);
         if (res != null) {
           DelegateData.delegateData=res;
+          await saveDelegateData(res);
           notifyListeners();
           Navigator.pushNamedAndRemoveUntil(context, homeRoute,(Route<dynamic> r)=>false);
         }
-      });
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -83,12 +83,10 @@ class OtpViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      await VerifyResendCode(context, data.mobile??"").then((res) {
-        if (res != null) {
-          startTimer();
-        }
-      });
-
+      var res = await VerifyResendCode(context, data.mobile ?? "");
+      if (res != null) {
+        startTimer();
+      }
     } catch (e) {
       debugPrint(e.toString());
     }
