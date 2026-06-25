@@ -167,5 +167,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "phone_invalid": MessageLookupByLibrary.simpleMessage("Invalid Saudi phone number\nExample: 05XXXXXXXX"),
     "name_Validation": MessageLookupByLibrary.simpleMessage("Name must be at least 2 characters long"),
     "verifyAccount": MessageLookupByLibrary.simpleMessage("Verify Account"),
+    "verification_code": MessageLookupByLibrary.simpleMessage("Verification Code"),
+    "verification_code_Validation": MessageLookupByLibrary.simpleMessage("Please enter the verification code sent to your mobile"),
+    "remaining_time": MessageLookupByLibrary.simpleMessage("Remaining Time"),
+    "resend_code": MessageLookupByLibrary.simpleMessage("Resend Code"),
+    "verifyToEmail": MessageLookupByLibrary.simpleMessage("A verification code has been sent to"),
   };
 }

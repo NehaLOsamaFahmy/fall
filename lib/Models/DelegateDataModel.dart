@@ -6,14 +6,20 @@ class DelegateDataModel {
   String? name;
   String? mobile;
   String? email;
+  String? message;
+  bool? requiresVerification;
+  String? token;
 
   DelegateDataModel({this.id, this.name, this.mobile, this.email});
 
   DelegateDataModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    mobile = json['mobile'];
-    email = json['email'];
+    requiresVerification = json['requires_verification']??true;
+    message = json['message']??"";
+    mobile = json['mobile'].toString()??"";
+    email = json['email'].toString()??"";
+    id = int.tryParse(json['id'].toString())??-1;
+    name = json['name'].toString()??"";
+    token = json['token'].toString()??"";
   }
 
   Map<String, dynamic> toJson() {

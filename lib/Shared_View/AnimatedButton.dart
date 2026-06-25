@@ -44,7 +44,7 @@ class _AnimatedButtonState extends State<AnimatedButton>
         highlightColor: Colors.transparent
     ), child:
     Container(
-        margin: EdgeInsets.fromLTRB(5.0.w, 2.0.h, 5.0.w, 2.0.h),
+        margin: EdgeInsets.fromLTRB(5.0.w, 2.0.h, 5.0.w, 4.0.h),
         child: InkWell(
           child:
           AnimatedContainer(

@@ -27,23 +27,17 @@ class RegisterViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-
-      debugPrint("First Name: ${firstNameController.text}");
-      debugPrint("Last Name: ${lastNameController.text}");
-      debugPrint("Email: ${emailController.text}");
-      debugPrint("Phone: ${phoneController.text}");
-      var res = await Registration(context, phoneController.text,firstNameController.text,lastNameController.text,
+      var res = await RegistrationFun(context, phoneController.text,firstNameController.text,lastNameController.text,
           emailController.text,passwordController.text);
       if (res != null) {
         if (res.requiresVerification == true) {
-          Navigator.pushNamed(
+          Navigator.pushReplacementNamed(
             context,
             verifyCodeRoute,
             arguments: res,
           );
         }
       }
-
     } catch (e) {
       debugPrint(e.toString());
     }

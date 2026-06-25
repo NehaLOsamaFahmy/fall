@@ -1,9 +1,14 @@
 import 'dart:async';
-import 'package:babco/Models/RegisterResponse.dart';
+import 'package:babco/Api/Login/VerifyResendCode.dart';
+import 'package:babco/Models/DelegateDataModel.dart';
+import 'package:babco/Shared_Data/DelegateData.dart';
 import 'package:flutter/material.dart';
 
+import '../../Api/Login/Verifycode.dart';
+import '../../Routes/route_constants.dart';
+
 class OtpViewModel extends ChangeNotifier {
-  final RegisterResponse data;
+  final DelegateDataModel data;
 
   OtpViewModel({
     required this.data,
@@ -14,7 +19,7 @@ class OtpViewModel extends ChangeNotifier {
 
   bool isLoading = false;
 
-  static const int otpDuration = 15 * 60; // 15 minutes
+  static const int otpDuration = 1 * 60; // 15 minutes
 
   int remainingSeconds = otpDuration;
 
@@ -57,24 +62,13 @@ class OtpViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      /// TODO Verify OTP API
-
-      /*
-      await VerifyOtpApi(
-        userId: userId,
-        code: otpController.text,
-      ).call();
-      */
-
-      await Future.delayed(const Duration(seconds: 2));
-
-      if (!context.mounted) return;
-
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        "/home",
-            (route) => false,
-      );
+      await Verifycode(context, data.mobile??"", otpController.text).then((res) {
+        if (res != null) {
+          DelegateData.delegateData=res;
+          notifyListeners();
+          Navigator.pushNamedAndRemoveUntil(context, homeRoute,(Route<dynamic> r)=>false);
+        }
+      });
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -83,25 +77,18 @@ class OtpViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> resendCode() async {
-    if (!isExpired) return;
+  Future<void> resendCode(BuildContext context) async {
 
     isLoading = true;
     notifyListeners();
 
     try {
-      /// TODO Resend OTP API
+      await VerifyResendCode(context, data.mobile??"").then((res) {
+        if (res != null) {
+          startTimer();
+        }
+      });
 
-      /*
-      await ResendOtpApi(
-        userId: userId,
-        email: email,
-      ).call();
-      */
-
-      await Future.delayed(const Duration(seconds: 2));
-
-      startTimer();
     } catch (e) {
       debugPrint(e.toString());
     }

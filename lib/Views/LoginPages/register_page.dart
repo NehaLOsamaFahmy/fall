@@ -1,8 +1,10 @@
 import 'package:babco/Shared_View/GlobalTextField.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../Constans/Style.dart';
 import '../../Localization/Translations.dart';
 import '../../Shared_View/AnimatedButton.dart';
 import '../../Shared_View/AppBarView.dart';
@@ -24,7 +26,16 @@ class RegisterPage extends StatelessWidget {
             appBar: AppBarWithBack(
                 context, Translations.of(context)!.New_user),
             backgroundColor: Colors.white,
-            body: Form(
+            body:LoadingOverlay(
+                isLoading: vm.isLoading,
+                opacity: 0.2,
+                color: Style.MainColor,
+                progressIndicator: CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(Style.MainColor),),
+                child: Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  child: Form(
               key: vm.formKey,
               child: SingleChildScrollView(
                 child:Column(
@@ -152,14 +163,12 @@ class RegisterPage extends StatelessWidget {
 
                     AnimatedButton(
                       text: Translations.of(context)!.Login_btn,
-                      onTapped: () async {
-                        await vm.register(context);
-                      },
+                      onTapped: ()=> vm.register(context),
                     ),
                   ],
                 ),
               ),])
-            )),
+            )))),
           );
         },
       ),

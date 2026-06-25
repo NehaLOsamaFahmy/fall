@@ -1,8 +1,11 @@
-import 'package:babco/Models/RegisterResponse.dart';
+import 'package:babco/Localization/Translations.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../Constans/Style.dart';
+import '../../Models/DelegateDataModel.dart';
 import '../../Shared_View/AnimatedButton.dart';
 import '../../Shared_View/AppBarView.dart';
 import '../../Shared_View/GlobalTextField.dart';
@@ -10,7 +13,7 @@ import '../../ViewModels/LoginViewModel/OtpViewModel.dart';
 
 
 class OtpPage extends StatelessWidget {
-  final RegisterResponse data;
+  final DelegateDataModel data;
 
 
   const OtpPage({
@@ -30,9 +33,18 @@ class OtpPage extends StatelessWidget {
             backgroundColor: Colors.white,
             appBar: AppBarWithBack(
               context,
-              "Verify Account",
+              Translations.of(context)!.verifyAccount,
             ),
-            body: Form(
+            body:LoadingOverlay(
+                isLoading: vm.isLoading,
+                opacity: 0.2,
+                color: Style.MainColor,
+                progressIndicator: CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(Style.MainColor),),
+                child: Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  child:  Form(
               key: vm.formKey,
               child: SingleChildScrollView(
                 child: Padding(
@@ -47,33 +59,30 @@ class OtpPage extends StatelessWidget {
                       Icon(
                         Icons.mark_email_read_outlined,
                         size: 10.h,
+                        color: Style.SecondryColor,
                       ),
 
                       SizedBox(height: 2.h),
 
                       Text(
-                        "Verification Code",
-                        style: TextStyle(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        Translations.of(context)!.verificationCode,
+                        style: Style.MainText18Bold
                       ),
 
                       SizedBox(height: 1.h),
 
                       Text(
-                        "A verification code has been sent to",
+                        Translations.of(context)!.verifyToEmail,
                         textAlign: TextAlign.center,
+                          style: Style.MainText16
                       ),
 
                       SizedBox(height: .5.h),
 
                       Text(
-                        data.mobile??"",
+                        data.email??"",
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Style.MainText16Bold
                       ),
 
                       SizedBox(height: 3.h),
@@ -81,71 +90,63 @@ class OtpPage extends StatelessWidget {
                       GlobalTextField(
                         controller: vm.otpController,
                         keyboardType: TextInputType.number,
-                        label: "Verification Code",
+                        label: Translations.of(context)!.verificationCode,
                         icon: Icons.password,
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
-                            return "Please enter verification code";
+                            return Translations.of(context)!.verificationCode_Validation;
                           }
-
-                          if (value.trim().length < 4) {
-                            return "Invalid verification code";
-                          }
-
                           return null;
                         },
                         onChanged: (value) {},
                       ),
 
-                      SizedBox(height: 2.h),
 
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        child: Text(
-                          vm.isExpired
-                              ? "Verification code expired"
-                              : "Remaining Time : ${vm.formattedTime}",
-                          style: TextStyle(
-                            fontSize: 13.sp,
-                            fontWeight: FontWeight.w600,
-                            color: vm.isExpired
-                                ? Colors.red
-                                : Colors.black,
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(height: 2.h),
+                      SizedBox(height: 5.h),
 
                       AnimatedButton(
-                        text: "Verify",
+                        text: Translations.of(context)!.verifyAccount,
                         onTapped: () async {
                           await vm.verifyCode(context);
                         },
                       ),
 
-                      SizedBox(height: 2.h),
-
-                      TextButton(
-                        onPressed: vm.isExpired
-                            ? () async {
-                          await vm.resendCode();
-                        }
-                            : null,
+                      vm.isExpired ? SizedBox.shrink():
+                      Container(
                         child: Text(
-                          vm.isExpired
-                              ? "Resend Code"
-                              : "Resend available after timer ends",
+                            "${Translations.of(context)!.remainingTime} : ${vm.formattedTime}",
+                            style:Style.MainText16.copyWith(
+                              color: Style.MainColor,
+                              //   decoration: TextDecoration.underline,
+                            ),
+                        ),
+                      ),
+
+
+                     !vm.isExpired
+                          ? SizedBox.shrink()
+                          :
+                      TextButton(
+                        onPressed:  () async {
+                          await vm.resendCode(context);
+                        },
+                        child: Text(
+                          Translations.of(context)!.resendCode,
+                          style: Style.MainText16Bold.copyWith(
+                         color: Style.MainColor,
+                         //   decoration: TextDecoration.underline,
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-            ),
+            ),))
           );
         },
       ),
+
     );
   }
 }

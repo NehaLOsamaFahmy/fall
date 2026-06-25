@@ -1,18 +1,17 @@
 import 'dart:convert';
 
-import 'package:babco/Models/DelegateDataModel.dart';
 import 'package:flutter/material.dart';
 
 import '../../Constans/Api_Services.dart';
 import '../../Constans/Base_Url.dart';
 import '../../Localization/Translations.dart';
+import '../../Models/DelegateDataModel.dart';
+import '../../Shared_Data/DelegateData.dart';
 import '../../Shared_Data/LanguageData.dart';
 import '../../Shared_Data/NetworkCheckData.dart';
 import '../../Shared_View/AlertView.dart';
 
-Future<DelegateDataModel?> RegistrationFun(BuildContext context,String mobile ,String first_name,
-    String last_name,String email,String password) async
-{
+Future<DelegateDataModel?> VerifyResendCode(BuildContext context,String mobile ) async {
   try {
     bool InternetConntected = await hasNetwork();
     if (InternetConntected) {
@@ -21,25 +20,20 @@ Future<DelegateDataModel?> RegistrationFun(BuildContext context,String mobile ,S
         print(lang);
         var data = jsonEncode(<String, String>{
           'mobile': mobile,
-          "first_name":first_name,
-          "last_name":last_name,
-          "email":email,
-          "password":password,
           "lang": lang,
         });
-        final response = await Post_Data(registration, data);
+        final response = await Post_Data(resend_verification, data);
         print(response.body);
         Map valueMap = jsonDecode(response.body);
         if (valueMap['code'] == 200) {
-          print( " fn_Registration200 ::: ${valueMap['message']} ${valueMap['data']}");
-          DelegateDataModel obj= new DelegateDataModel.fromJson(valueMap['data']);
-          await AlertView(context, "success", Translations.of(context)!.Ok,Translations.of(context)!.success_msg);
+          print( " fn_Verifycode200 ::: ${valueMap['message']} ${valueMap['data']}");
+          var obj= DelegateDataModel.fromJson(valueMap['data']);
           return obj;
         }
         else {
           await AlertView(
               context, "error", Translations.of(context)!.ErrorTitle,valueMap['message'].toString());
-          print( "fn_Registration400 ::: ${valueMap['message']} ${valueMap['data']}");
+          print( "fn_Verifycode400 ::: ${valueMap['message']} ${valueMap['data']}");
           return null;
         }
       }
@@ -48,7 +42,7 @@ Future<DelegateDataModel?> RegistrationFun(BuildContext context,String mobile ,S
         await AlertView(
             context, "error", Translations.of(context)!.ErrorTitle,
             "Exception : ${e.toString()}");
-        print( "fn_RegistrationException ::: ${e} ");
+        print( "fn_VerifycodeException ::: ${e} ");
         return null;
       }
     }
@@ -56,7 +50,7 @@ Future<DelegateDataModel?> RegistrationFun(BuildContext context,String mobile ,S
       await AlertView(
           context, "error", Translations.of(context)!.ErrorTitle,
           Translations.of(context)!.CheckInternet);
-      print("fn_RegistrationException ::: checkInternet ");
+      print("fn_VerifycodeException ::: checkInternet ");
       return null;
     }
   }
@@ -64,7 +58,7 @@ Future<DelegateDataModel?> RegistrationFun(BuildContext context,String mobile ,S
     await AlertView(
         context, "error", Translations.of(context)!.ErrorTitle,
         "Exception : ${e.toString()}");
-    print("fn_RegistrationException ::: ${e} ");
+    print("fn_VerifycodeException ::: ${e} ");
     return null;
   }
 }

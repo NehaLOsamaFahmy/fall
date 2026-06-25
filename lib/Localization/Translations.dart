@@ -908,6 +908,34 @@ String get enter_amount {
       name: 'verifyAccount',
     );
   }
+String get remainingTime {
+    return Intl.message(
+      'remainingTime',
+      name: 'remainingTime',
+    );
+  }
+String get verificationCode_Validation {
+    return Intl.message(
+      'verificationCode_Validation',
+      name: 'verificationCode_Validation',
+    );
+  }
+String get verificationCode {
+    return Intl.message(
+      'verificationCode',
+      name: 'verificationCode',
+    );
+  }String get verifyToEmail {
+    return Intl.message(
+      'verifyToEmail',
+      name: 'verifyToEmail',
+    );
+  }String get resendCode {
+    return Intl.message(
+      'resendCode',
+      name: 'resendCode',
+    );
+  }
 
 
 }

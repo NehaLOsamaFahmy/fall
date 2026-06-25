@@ -24,6 +24,7 @@ const String AppMainPage ="App-Main-Page";
 const String WalletRequest ="Wallet/WalletRequest";
 const String ConvertPoints ="Wallet/ConvertPoints";
 const String Delete_user ="customers/delete";
+const String resend_verification ="customers/resend-verification";
 
 
 

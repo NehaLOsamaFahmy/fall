@@ -168,5 +168,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "phone_invalid": MessageLookupByLibrary.simpleMessage("رقم هاتف سعودي غير صحيح\nمثال: 05XXXXXXXX"),
     "name_Validation": MessageLookupByLibrary.simpleMessage("الاسم يجب ان يكون اكثر من حرفين"),
     "verifyAccount": MessageLookupByLibrary.simpleMessage("التحقق من الحساب"),
+    "verificationCode": MessageLookupByLibrary.simpleMessage("كود التحـقـق"),
+    "verificationCode_Validation": MessageLookupByLibrary.simpleMessage("ادخل كود التحقق"),
+    "remainingTime": MessageLookupByLibrary.simpleMessage("الوقت المتبقي"),
+    "resendCode": MessageLookupByLibrary.simpleMessage("إعادة إرسال الكود"),
+    "verifyToEmail": MessageLookupByLibrary.simpleMessage("تم إرسال كود التحقق إلى بريدك الإلكتروني"),
   };
 }

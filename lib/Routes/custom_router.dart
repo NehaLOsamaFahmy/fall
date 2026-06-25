@@ -1,5 +1,5 @@
 
-import 'package:babco/Models/RegisterResponse.dart';
+import 'package:babco/Models/DelegateDataModel.dart';
 import 'package:babco/Views/LoginPages/otp_code_page.dart';
 import 'package:babco/Views/LoginPages/register_page.dart';
 import 'package:flutter/material.dart';
@@ -161,7 +161,7 @@ class CustomRouter {
         }
       case verifyCodeRoute:
         {
-          final args= settings.arguments as RegisterResponse;
+          final args= settings.arguments as DelegateDataModel;
           return MaterialPageRoute(builder: (_) => OtpPage(data: args,));
         }
       default:
