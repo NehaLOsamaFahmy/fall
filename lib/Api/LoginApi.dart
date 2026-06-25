@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:babco/Models/RegisterResponse.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
@@ -78,70 +79,6 @@ Future<DelegateDataModel?> Login(BuildContext context,String mobile ) async {
   }
 }
 
-Future<bool?> Registration(BuildContext context,String mobile ,String first_name, String last_name,String email) async {
-  try {
-    bool InternetConntected = await hasNetwork();
-    if (InternetConntected) {
-      try {
-        var lang= LanguageData.languageData;
-        print(lang);
-        var data = jsonEncode(<String, String>{
-          'mobile': mobile,
-          "first_name":first_name,
-        "last_name":last_name,
-        "email":email,
-          "lang": lang,
-        });
-        final response = await Post_Data(registration, data);
-        print(response.body);
-      //  if (response.statusCode == 200) {
-          Map valueMap = jsonDecode(response.body);
-          if (valueMap['code'] == 200) {
-            print( " fn_Registration200 ::: ${valueMap['message']} ${valueMap['data']}");
-            await AlertView(
-                context, "success", Translations.of(context)!.Ok,Translations.of(context)!.success_msg);
-            return true;
-          }
-          else {
-            await AlertView(
-                context, "error", Translations.of(context)!.ErrorTitle,valueMap['message'].toString());
-            print( "fn_Registration400 ::: ${valueMap['message']} ${valueMap['data']}");
-            return false;
-          }
-      /*  }
-        else {
-          await AlertView(
-              context, "error", Translations.of(context)!.ErrorTitle,
-              "error_statusCode ${response.statusCode} ${response.reasonPhrase}");
-          print( "fn_LRegistrationstatusCode400 ::: ${response.statusCode} ");
-          return false;
-        }*/
-      }
-      catch(e)
-      {
-        await AlertView(
-            context, "error", Translations.of(context)!.ErrorTitle,
-            "Exception : ${e.toString()}");
-        print( "fn_RegistrationException ::: ${e} ");
-        return false;
-      }
-    }
-    else {
-      await AlertView(
-          context, "error", Translations.of(context)!.ErrorTitle,
-          Translations.of(context)!.CheckInternet);
-      print("fn_RegistrationException ::: checkInternet ");
-      return false;
-    }
-  }
-  catch (e) {
-    await AlertView(
-        context, "error", Translations.of(context)!.ErrorTitle,
-        "Exception : ${e.toString()}");
-    print("fn_RegistrationException ::: ${e} ");
-    return false;
-  }
-}
 
 Future<DelegateDataModel?> Verifycode(BuildContext context,String mobile ,String code) async {
   try {
@@ -351,14 +288,14 @@ Future<CompanyModel?> StartToLogin(BuildContext context,String id) async {
 
 
 
-Future< bool?> deleteAccountFun(BuildContext context, String id ) async {
+Future< bool?> deleteAccountFun(BuildContext context, String phone ) async {
   try {
     bool InternetConntected = await hasNetwork();
     if (InternetConntected) {
       try {
 
         var data = jsonEncode(<String, String>{
-          'id': id,
+          'mobile': phone,
           'lang': LanguageData.languageData
         });
         final response = await Post_Data(Delete_user, data);

@@ -27,7 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "login" : MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
     "not_valid_username" : MessageLookupByLibrary.simpleMessage("اسم المستخدم غير صحيح"),
     "password" : MessageLookupByLibrary.simpleMessage("كلمة المرور"),
-    "password_is_too_short" : MessageLookupByLibrary.simpleMessage("كلمة المرور غير صحيحه"),
+    "password_is_too_short" : MessageLookupByLibrary.simpleMessage("كلمة المرور قصيرة جدًا"),
     "profile" : MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
     "support" : MessageLookupByLibrary.simpleMessage("الدعم"),
     "username" : MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
@@ -165,6 +165,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "delete_msg1":MessageLookupByLibrary.simpleMessage("حذف الحساب نهائيا."),
     "delete_msg2":MessageLookupByLibrary.simpleMessage("تأكيد الحذف"),
     "delete_msg3":MessageLookupByLibrary.simpleMessage("هل أنت متأكد أنك تريد حذف الحساب؟ لا يمكن التراجع عن هذا الإجراء."),
-
+    "phone_invalid": MessageLookupByLibrary.simpleMessage("رقم هاتف سعودي غير صحيح\nمثال: 05XXXXXXXX"),
+    "name_Validation": MessageLookupByLibrary.simpleMessage("الاسم يجب ان يكون اكثر من حرفين"),
+    "verifyAccount": MessageLookupByLibrary.simpleMessage("التحقق من الحساب"),
   };
 }

@@ -75,7 +75,7 @@ class _AnimatedButtonState extends State<AnimatedButton>
             ),
             child: Text(widget.text, textAlign: TextAlign.center,
               style: TextStyle(color: color_text1,
-                  fontSize: 16.0.sp, fontWeight: FontWeight.bold),),
+                  fontSize: 18.0.sp, fontWeight: FontWeight.bold),),
           ) ,
           onTap: () {
             setState(() {

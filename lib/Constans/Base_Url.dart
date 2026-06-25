@@ -23,7 +23,7 @@ const String branches = "branches";
 const String AppMainPage ="App-Main-Page";
 const String WalletRequest ="Wallet/WalletRequest";
 const String ConvertPoints ="Wallet/ConvertPoints";
-const String Delete_user ="Delete_user";
+const String Delete_user ="customers/delete";
 
 
 

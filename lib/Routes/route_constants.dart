@@ -28,3 +28,4 @@ const String NewOfferRoute = "NewOfferRoute";
 const String LoyaltySystemRoute = "LoyaltySystemRoute";
 const String ServicesReviewsRoute = "ServicesReviewsRoute";
 const String deleteAccountRoute = "deleteAccountRoute";
+const String verifyCodeRoute = "verifyCodeRoute";

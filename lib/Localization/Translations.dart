@@ -892,6 +892,21 @@ String get enter_amount {
       'delete_msg3',
       name: 'delete_msg3',
     );
+  } String get phone_invalid {
+    return Intl.message(
+      'phone_invalid',
+      name: 'phone_invalid',
+    );
+  }String get name_Validation {
+    return Intl.message(
+      'name_Validation',
+      name: 'name_Validation',
+    );
+  }String get verifyAccount {
+    return Intl.message(
+      'verifyAccount',
+      name: 'verifyAccount',
+    );
   }
 
 

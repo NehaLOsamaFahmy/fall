@@ -1,0 +1,64 @@
+import 'package:flutter/material.dart';
+import '../../Api/Login/RegisterApi.dart';
+import '../../Routes/route_constants.dart';
+
+class RegisterViewModel extends ChangeNotifier {
+
+  final formKey = GlobalKey<FormState>();
+
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  bool isLoading = false;
+  bool obscureText = true;
+
+  void togglePassword() {
+    obscureText = !obscureText;
+    notifyListeners();
+  }
+
+  Future<void> register(BuildContext context) async {
+    if (!formKey.currentState!.validate()) return;
+
+    isLoading = true;
+    notifyListeners();
+
+    try {
+
+      debugPrint("First Name: ${firstNameController.text}");
+      debugPrint("Last Name: ${lastNameController.text}");
+      debugPrint("Email: ${emailController.text}");
+      debugPrint("Phone: ${phoneController.text}");
+      var res = await Registration(context, phoneController.text,firstNameController.text,lastNameController.text,
+          emailController.text,passwordController.text);
+      if (res != null) {
+        if (res.requiresVerification == true) {
+          Navigator.pushNamed(
+            context,
+            verifyCodeRoute,
+            arguments: res,
+          );
+        }
+      }
+
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+
+    isLoading = false;
+    notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+}

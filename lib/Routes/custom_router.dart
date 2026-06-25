@@ -1,4 +1,7 @@
 
+import 'package:babco/Models/RegisterResponse.dart';
+import 'package:babco/Views/LoginPages/otp_code_page.dart';
+import 'package:babco/Views/LoginPages/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:babco/Models/DataModel.dart';
 import 'package:babco/Models/MainModel.dart';
@@ -25,8 +28,6 @@ import '../Views/loyalty_page.dart';
 import '../Views/map_location_page.dart';
 import '../Views/map_page.dart';
 import '../Views/new_offer_page.dart';
-import '../Views/new_user_page.dart';
-import '../Shared_Data/CompanyData.dart';
 import '../Shared_Data/DelegateData.dart';
 import '../Views/home_page.dart';
 import '../Views/login_page.dart';
@@ -67,7 +68,7 @@ class CustomRouter {
       case BalanceRoute:
         return MaterialPageRoute(builder: (_) => BalancePage());
       case newUserRoute:
-        return MaterialPageRoute(builder: (_) => NewUserPage());
+        return MaterialPageRoute(builder: (_) => RegisterPage());
       case NewServiceRoute:
         {
           final args= settings.arguments as DataModel;
@@ -157,6 +158,11 @@ class CustomRouter {
         {
           final args= settings.arguments as OffersAndDiscounts;
           return MaterialPageRoute(builder: (_) => NewOfferPage(data: args,));
+        }
+      case verifyCodeRoute:
+        {
+          final args= settings.arguments as RegisterResponse;
+          return MaterialPageRoute(builder: (_) => OtpPage(data: args,));
         }
       default:
         return MaterialPageRoute(builder: (_) => NotFoundPage());

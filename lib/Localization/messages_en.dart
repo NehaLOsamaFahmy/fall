@@ -27,7 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "login" : MessageLookupByLibrary.simpleMessage("Login"),
     "not_valid_username" : MessageLookupByLibrary.simpleMessage("Not Valid Username"),
     "password" : MessageLookupByLibrary.simpleMessage("password"),
-    "password_is_too_short" : MessageLookupByLibrary.simpleMessage("password is too short"),
+    "password_is_too_short" : MessageLookupByLibrary.simpleMessage("Password must be at least 6 characters long"),
     "profile" : MessageLookupByLibrary.simpleMessage("Profile"),
     "support" : MessageLookupByLibrary.simpleMessage("Support"),
     "username" : MessageLookupByLibrary.simpleMessage("User name"),
@@ -164,6 +164,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "delete_msg1":MessageLookupByLibrary.simpleMessage("Delete Account"),
     "delete_msg2":MessageLookupByLibrary.simpleMessage("Confirm deletion"),
     "delete_msg3":MessageLookupByLibrary.simpleMessage("Are you sure you want to delete the account? This action cannot be reversed."),
-
+    "phone_invalid": MessageLookupByLibrary.simpleMessage("Invalid Saudi phone number\nExample: 05XXXXXXXX"),
+    "name_Validation": MessageLookupByLibrary.simpleMessage("Name must be at least 2 characters long"),
+    "verifyAccount": MessageLookupByLibrary.simpleMessage("Verify Account"),
   };
 }

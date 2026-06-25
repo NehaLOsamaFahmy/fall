@@ -19,7 +19,7 @@ class LoginViewModel extends ChangeNotifier {
       _loading = true;
       notifyListeners();
 
-      var x = await deleteAccountFun(context, DelegateData.delegateData!.id.toString());
+      var x = await deleteAccountFun(context, DelegateData.delegateData!.mobile.toString());
       if (x == true) {
         try {
           await removeDelgateDate();
