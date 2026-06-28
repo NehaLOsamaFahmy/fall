@@ -59,8 +59,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "delegate":MessageLookupByLibrary.simpleMessage("المندوب"),
     "phone_number":MessageLookupByLibrary.simpleMessage("رقم الجوال"),
     "phone_number_Validation" : MessageLookupByLibrary.simpleMessage(
-       "ادخل رقم الجوال"+" (مثال :5xxxxxxxxx )"),
-    "phone_number_ex" : MessageLookupByLibrary.simpleMessage("(مثال :5xxxxxxxx )"),
+       "ادخل رقم الجوال"+" (مثال :05XXXXXXXX )"),
+    "phone_number_ex" : MessageLookupByLibrary.simpleMessage("(مثال :05XXXXXXXX )"),
     "code":MessageLookupByLibrary.simpleMessage("ادخل الكود"),
     "code_Validation" : MessageLookupByLibrary.simpleMessage(" الرجاء ادخال الكود المرسل على الجوال "),
     "code_resend" : MessageLookupByLibrary.simpleMessage(" إعادة إرسال الكود "),
