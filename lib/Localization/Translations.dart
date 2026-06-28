@@ -982,5 +982,16 @@ String get verificationCode {
       name: 'whatsApp',
     );
   }
+  String get currentPassword {
+    return Intl.message(
+      'currentPassword',
+      name: 'currentPassword',
+    );
+  } String get newPassword {
+    return Intl.message(
+      'newPassword',
+      name: 'newPassword',
+    );
+  }
 
 }

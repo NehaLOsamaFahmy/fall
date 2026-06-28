@@ -11,7 +11,8 @@ import '../Shared_Data/LanguageData.dart';
 import '../Shared_Data/NetworkCheckData.dart';
 import '../Shared_View/AlertView.dart';
 
-Future<DelegateDataModel?> EditCustomer(BuildContext context,String mobile ,String first_name,String email) async {
+Future<DelegateDataModel?> EditCustomer(BuildContext context,String mobile ,
+    String first_name,String email,String currentPassword, String newPassword) async {
   try {
     bool InternetConntected = await hasNetwork();
     if (InternetConntected) {
@@ -23,6 +24,8 @@ Future<DelegateDataModel?> EditCustomer(BuildContext context,String mobile ,Stri
           "name":first_name,
           "email":email,
           "lang": lang,
+          "currentPassword":currentPassword,
+          "newPassword":newPassword
         });
         final response = await Post_Data(editcustomer+"/"+DelegateData.delegateData!.id!.toString(), data);
         print(response.body);

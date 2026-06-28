@@ -1,202 +1,277 @@
-
-import 'package:flutter/material.dart';
+import 'package:babco/Constans/Style.dart';
 import 'package:babco/Localization/Translations.dart';
-import 'package:babco/Shared_Data/DelegateData.dart';
+import 'package:babco/Shared_View/AnimatedButton.dart';
+import 'package:babco/Shared_View/AppBarView.dart';
+import 'package:babco/Shared_View/DrawerView.dart';
+import 'package:babco/Shared_View/GlobalTextField.dart';
+import 'package:flutter/material.dart';
 import 'package:loading_overlay/loading_overlay.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-import '../Api/EditCustomerApi.dart';
-import '../Api/Login/LoginApi.dart';
-import '../Constans/Style.dart';
-import '../Routes/route_constants.dart';
-import '../Shared_Data/formatDateTime.dart';
-import '../Shared_View/AlertView.dart';
-import '../Shared_View/AnimatedButton.dart';
-import '../Shared_View/AppBarView.dart';
-import '../Shared_View/DrawerView.dart';
-import '../Shared_View/GlobalTextField.dart';
-
-class PersonInformationPage extends StatefulWidget {
-
-  PersonInformationPage({Key? key}) : super(key: key);
-
-  @override
-  _PersonInformationPageState createState() => _PersonInformationPageState();
-}
-
-class _PersonInformationPageState extends State<PersonInformationPage> {
-
-  bool _isLoading = false;
-  TextEditingController nameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController mobileController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    super.initState();
-
-    Future.delayed(Duration.zero, () {
-      GetData();
-    });
-  }
+import '../ViewModels/PersonInformationViewModel.dart';
 
 
+class PersonInformationPage extends StatelessWidget {
+  const PersonInformationPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBarWithBack(
-            context, Translations.of(context)!.Info),
-        drawer: DrawerList(context),
-        body:SafeArea(child: LoadingOverlay(
-            child: Container(
-                height: double.infinity,
-                width: double.infinity,
-                child: new GestureDetector(
-                  onTap: () {
-                    FocusScope.of(context).requestFocus(new FocusNode());
-                  },
-                  child: FormUI(context),
-                )),
-
-            isLoading: _isLoading,
-            opacity: 0.3,
-            color: Style.WhiteColor,
-            progressIndicator: CircularProgressIndicator(
-              valueColor: new AlwaysStoppedAnimation<Color>(Style.MainColor),))
-    ));
-  }
-
-  Widget FormUI(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(height: 3.0.h,),
-          Image(image: AssetImage('lib/assets/logo.png'), width: 60.0.w, height: 17.0.h,),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 5.0.w, vertical: 5.0.h),
-            child:Form(
-              key: _formKey,
-              child:   Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  GlobalTextField(controller: nameController,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return Translations.of(context)!.username_Validation;
-                        }
-                        return null;
-                      },
-                      keyboardType: TextInputType.name, label: '',
-                    hint: Translations.of(context)!.username,
-                    onChanged: (String ) {  },
-                    icon: Icons.person,
-                      ),
-                  SizedBox(height: 1.0.h,),
-                  GlobalTextField(controller: mobileController,
-                    validator: (value){
-                      if (value!.isEmpty ||  value.length <9) {
-                        return Translations.of(context)!.Phone_number_Validation;
-                      }
-                      return null;
-                    },
-                    keyboardType: TextInputType.phone, label: '',
-                    hint: Translations.of(context)!.phone_number_ex,
-                    onChanged: (String ) {  },
-                    icon: Icons.phone_android,
+    return ChangeNotifierProvider(
+      create: (_) => PersonInformationViewModel()..GetData(context),
+      child: Consumer<PersonInformationViewModel>(
+        builder: (context, vm, child) {
+          return Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBarWithBack(
+              context,
+              Translations.of(context)!.Info,
+            ),
+            drawer: DrawerList(context),
+            body: SafeArea(
+              child: LoadingOverlay(
+                isLoading: vm.isLoading,
+                opacity: .3,
+                color: Style.WhiteColor,
+                progressIndicator: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    Style.MainColor,
                   ),
-                  SizedBox(height: 1.0.h,),
-                  GlobalTextField(controller: emailController,
-                    validator: (value){
-                      if (value!.isEmpty) {
-                        return Translations.of(context)!.Email_Validation;
-                      }
-                      return null;
-                    },
-                    keyboardType: TextInputType.emailAddress, label: '',
-                    hint: Translations.of(context)!.Email,
-                    onChanged: (String ) {  },
-                    icon: Icons.email_outlined,
-                  ),
-                  SizedBox(height: 5.0.h,),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 14.0.w),
-                child:
-                        AnimatedButton(text:Translations.of(context)!.edit_data,onTapped: startFun,))
-
-
-
-                ],
+                ),
+                child: GestureDetector(
+                  onTap: () => FocusScope.of(context).unfocus(),
+                  child: _form(context, vm),
+                ),
               ),
             ),
-          ),
-
-
-        ],
+          );
+        },
       ),
     );
   }
 
-  Future<void> GetData()
-  async {
+  Widget _form(
+      BuildContext context,
+      PersonInformationViewModel vm,
+      ) {
+    return SingleChildScrollView(
+        child: Form(
+            key: vm.formKey,
+            child: Column(
+                children: [
+                SizedBox(height: 2.h),
 
-    if(DelegateData.delegateData!= null && DelegateData.delegateData!.id!>0) {
-      showLoading();
-      setState(() {
-        nameController.text = DelegateData.delegateData!.name!;
-        mobileController.text = DelegateData.delegateData!.mobile!;
-        emailController.text = DelegateData.delegateData!.email!;
-      });
-      hideLoading();
-    }
-    else
-    {
-      await AlertView2(context);
-    }
+            Image.asset(
+              "lib/assets/logo.png",
+              width: 60.w,
+              height: 20.h,
+            ),
 
-  }
+            Container(
+              margin: EdgeInsets.symmetric(
+                horizontal: 5.w,
+                vertical: 2.h,
+              ),
+              child: Column(
+                children: [
 
-  void showLoading() {
-    setState(() {
-      _isLoading=true;
-    });
-  }
-  void hideLoading() {
-    setState(() {
-      _isLoading=false;
-    });
-  }
+                /// Name
+                GlobalTextField(
+                controller: vm.nameController,
+                icon: Icons.person_pin_sharp,
+                label: Translations.of(context)!.username,
+                onChanged: (_) {},
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return Translations.of(context)!
+                        .username_Validation;
+                  }
 
+                  if (value.trim().length < 2) {
+                    return Translations.of(context)!
+                        .name_Validation;
+                  }
 
+                  return null;
+                },
+              ),
 
+              SizedBox(height: 1.h),
 
-  Future<void> startFun()async {
-    if( nameController.text == DelegateData.delegateData!.name!&&
-    mobileController.text == DelegateData.delegateData!.mobile!&&
-    emailController.text == DelegateData.delegateData!.email!)
-      {
-        await AlertView(
-            context, "error", Translations.of(context)!.Please,Translations.of(context)!.new_noData);
-      }
-    else {
-      if (_formKey.currentState!.validate()) {
-        showLoading();
-        var res = await EditCustomer(
-            context, mobileController.text, nameController.text,
-            emailController.text);
-        hideLoading();
-        if (res != null) {
-          setState(() {
-            DelegateData.delegateData = res;
-          });
-          Navigator.pushNamed(context, homeRoute);
-        }
-        hideLoading();
-      }
-    }
+              /// Email
+              GlobalTextField(
+                controller: vm.emailController,
+                keyboardType: TextInputType.emailAddress,
+                icon: Icons.email,
+                label: Translations.of(context)!.Email,
+                onChanged: (_) {},
+                validator: (value) {
+                  if (value == null ||
+                      value.trim().isEmpty) {
+                    return Translations.of(context)!
+                        .Email_Validation;
+                  }
+
+                  final emailRegex = RegExp(
+                    r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                  );
+
+                  if (!emailRegex.hasMatch(value.trim())) {
+                    return Translations.of(context)!
+                        .Email_Validation;
+                  }
+
+                  return null;
+                },
+              ),
+
+              SizedBox(height: 1.h),
+
+              /// Mobile
+              GlobalTextField(
+                controller: vm.mobileController,
+                keyboardType: TextInputType.phone,
+                icon: Icons.phone_android,
+                label:
+                Translations.of(context)!.Phone_number,
+                onChanged: (_) {},
+                validator: (value) {
+                  if (value == null ||
+                      value.trim().isEmpty) {
+                    return Translations.of(context)!
+                        .Phone_number_Validation;
+                  }
+
+                  final phone = value.trim();
+
+                  final regex =
+                  RegExp(r'^05[0-9]{8}$');
+
+                  if (!regex.hasMatch(phone)) {
+                    return Translations.of(context)!
+                        .phone_invalid;
+                  }
+
+                  return null;
+                },
+              ),
+
+              SizedBox(height: 1.h),
+
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 2.w,
+                  vertical: .5.h,
+                ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 2.w,
+                  vertical: .5.h,
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: vm.showPasswordFields
+                        ? Style
+                        .BorderTextFieldFocusedColor
+                        : Style.BorderTextFieldColor,
+                  ),
+                ),
+                child: Column(
+                    children: [
+                Row(
+                children: [
+                SizedBox(width: 1.w),
+
+                Icon(
+                  Icons.lock_outline,
+                  color: Style.SecondryColor,
+                  size: 3.h,
+                ),
+
+                SizedBox(width: 2.w),
+
+                Expanded(
+                  child: Text(
+                    Translations.of(context)!
+                        .Password,
+                    style:
+                    Style.MainText14Bold,
+                  ),
+                ),
+
+                TextButton(
+                  onPressed:
+                  vm.togglePasswordFields,
+                  child: Text(
+                    vm.showPasswordFields
+                        ? Translations.of(
+                        context)!
+                        .cancel
+                        : Translations.of(
+                        context)!
+                        .edit_data,
+                    style: Style.MainText14
+                        .copyWith(
+                      color: vm
+                          .showPasswordFields
+                          ? Colors.red
+                          : Style.MainColor,
+                    ),
+                  ),
+                ),
+                ],
+              ),
+                      AnimatedSize(
+                        duration: const Duration(milliseconds: 250),
+                        child: vm.showPasswordFields
+                            ? Column(
+                          children: [
+                            GlobalTextField(
+                              controller:
+                              vm.currentPasswordController,
+                              password: true,
+                              icon: Icons.lock_outline,
+                              label: Translations.of(context)!
+                                  .currentPassword,
+                              onChanged: (_) {},
+                              validator: (value) => vm
+                                  .passwordValidator(
+                                  context, value),
+                            ),
+
+                            SizedBox(height: 1.h),
+
+                            GlobalTextField(
+                              controller:
+                              vm.newPasswordController,
+                              password: true,
+                              icon: Icons.lock,
+                              label: Translations.of(context)!
+                                  .newPassword,
+                              onChanged: (_) {},
+                              validator: (value) => vm
+                                  .passwordValidator(
+                                  context, value),
+                            ),
+                          ],
+                        )
+                            : const SizedBox.shrink(),
+                      ),
+                    ],
+                ),
+              ),
+
+                  SizedBox(height: 5.h),
+
+                  AnimatedButton(
+                    text: Translations.of(context)!.edit_data,
+                    onTapped: () => vm.startFun(context),
+                  ),
+                ],
+              ),
+            ),
+                ],
+            ),
+        ),
+    );
   }
 }

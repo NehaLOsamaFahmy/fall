@@ -10,7 +10,7 @@ class DelegateDataModel {
   bool? requiresVerification;
   String? token;
 
-  DelegateDataModel({this.id, this.name, this.mobile, this.email});
+  DelegateDataModel({this.id, this.name, this.mobile, this.email,this.token});
 
   DelegateDataModel.fromJson(Map<String, dynamic> json) {
     requiresVerification = json['requires_verification']??true;

@@ -1,4 +1,5 @@
 
+import 'package:babco/Views/LoginPages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:babco/Shared_Data/ServicesData.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -248,11 +249,21 @@ Drawer_itemTab( BuildContext context, String route)async
  // Navigator.pop(context);
 
       if (route == "loginRoute") {
-        await removeDelgateDate();
-       // await removeCompanyDate();
-        Navigator.pop(context);
-        Navigator.pushNamed(context, "startRoute");
-        
+        if(DelegateData.delegateData==null|| DelegateData.delegateData!.id!<0) {
+          Navigator.pop(context);
+         Navigator.pushNamed(context, loginRoute);
+        }
+        else
+          {
+            await removeDelgateDate();
+            Navigator.pop(context);
+            Navigator.pushNamedAndRemoveUntil(context, homeRoute,(Route<dynamic> r)=>false);
+          }
+
+
+
+
+
       }
       else
         {

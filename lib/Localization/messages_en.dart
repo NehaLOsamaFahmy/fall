@@ -180,5 +180,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "webSite":MessageLookupByLibrary.simpleMessage("Website"),
     "contactWebSite":MessageLookupByLibrary.simpleMessage("Browse our official website"),
     "sendMsg":MessageLookupByLibrary.simpleMessage("Send a message for support"),
+    "currentPassword": MessageLookupByLibrary.simpleMessage("Current Password"),
+    "newPassword": MessageLookupByLibrary.simpleMessage("New Password")
   };
 }

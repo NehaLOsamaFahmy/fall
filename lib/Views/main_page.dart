@@ -32,7 +32,12 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
     GetData();
   }
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
+    setState(() {});
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
