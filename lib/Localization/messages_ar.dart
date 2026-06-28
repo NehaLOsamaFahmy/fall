@@ -181,7 +181,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "webSite":MessageLookupByLibrary.simpleMessage("الموقع الإلكتروني"),
     "contactWebSite":MessageLookupByLibrary.simpleMessage("تصفح موقعنا الرسمي"),
     "sendMsg":MessageLookupByLibrary.simpleMessage("إرسال رسالة للدعم"),
-    "currentPassword": MessageLookupByLibrary.simpleMessage("الباسورد الحالي"),
-    "newPassword": MessageLookupByLibrary.simpleMessage("الباسورد الجديد")
+    "currentPassword": MessageLookupByLibrary.simpleMessage("كلمة السر الحالية"),
+    "newPassword": MessageLookupByLibrary.simpleMessage("كلمة السر الجديدة")
   };
 }

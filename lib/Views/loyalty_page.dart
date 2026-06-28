@@ -121,7 +121,7 @@ class _AboutUsPageState extends State<LoyaltySystemPage> {
                   SizedBox(height: 2.0.h),
 
                    Text(
-                    Translations.of(context)!.remainingTime + " "+secondsLeft.toString(),
+                     "${Translations.of(context)!.remainingTime} ${formatTime(secondsLeft)}",
                     style: Style.Secondry14Bold,
                   ),
 
@@ -133,7 +133,12 @@ class _AboutUsPageState extends State<LoyaltySystemPage> {
       );
     }
   }
+  String formatTime(int totalSeconds) {
+    final minutes = totalSeconds ~/ 60;
+    final seconds = totalSeconds % 60;
 
+    return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+  }
   Future<void> GetData()
   async {
 
