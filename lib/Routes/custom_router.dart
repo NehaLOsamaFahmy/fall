@@ -115,7 +115,7 @@ class CustomRouter {
         }
       case Connect_usRoute:
         {
-          return MaterialPageRoute(builder: (_) => Connect_usPage());
+          return MaterialPageRoute(builder: (_) => ConnectUsPage());
         }
       case AboutUsRoute:
         {
