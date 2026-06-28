@@ -56,7 +56,7 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
         data: Theme.of(context).copyWith(primaryColor: Style.SecondryColor),
        child: TextFormField(
          minLines: 1,
-         maxLines: 5,
+         maxLines: widget.password == true ? 1 : 5,
          textDirection: textDirection,
          scrollPadding: EdgeInsets.only(bottom:MediaQuery.of(context).viewInsets.bottom),
          autovalidateMode :AutovalidateMode.onUserInteraction,

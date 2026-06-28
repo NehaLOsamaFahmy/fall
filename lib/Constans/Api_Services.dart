@@ -12,6 +12,7 @@ Future<http.Response> Post_Data(String api_url, data) {
    String token = "";
    if(DelegateData.delegateData!= null && DelegateData.delegateData!.token!=null) {
      token = DelegateData.delegateData!.token!;
+     print(token);
    }
   print(UriData);
   print(data);

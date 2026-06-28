@@ -1,9 +1,12 @@
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:babco/Api/BalancePointApi.dart';
 import 'package:babco/Localization/Translations.dart';
 import 'package:babco/Shared_View/AnimatedButton.dart';
 import 'package:loading_overlay/loading_overlay.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:sizer/sizer.dart';
 
@@ -12,6 +15,7 @@ import '../Constans/Style.dart';
 import '../Routes/route_constants.dart';
 import '../Shared_Data/BalancePointData.dart';
 import '../Shared_Data/DelegateData.dart';
+import '../Shared_Data/QrEncryption.dart';
 import '../Shared_Data/formatDateTime.dart';
 import '../Shared_View/AlertView.dart';
 import '../Shared_View/AppBarView.dart';
@@ -30,6 +34,9 @@ class _AboutUsPageState extends State<LoyaltySystemPage> {
   bool _isLoading = false;
   String data="";
   bool login =false;
+  Timer? _timer;
+  String qrData = "";
+  int secondsLeft = 60;
 
   @override
   void initState() {
@@ -87,15 +94,39 @@ class _AboutUsPageState extends State<LoyaltySystemPage> {
                           SizedBox(height: 1.0.h,),
                           Text(BalancePointData.Point + " "+ Translations.of(context)!.Point,style: Style.MainText14,),
                           SizedBox(height: 2.0.h,),
-                          AnimatedButton(text: Translations.of(context)!.replacement_point, onTapped: StartFun)
+                          AnimatedButton(text: Translations.of(context)!.replacement_point,
+                              onTapped:() async {
+                                if (qrData.isEmpty) {
+                                  startQrTimer();
+                                }
+                              })
                         ],
                       )),
 
                        Expanded(child: Image(image: AssetImage("lib/assets/Point.png"),fit: BoxFit.contain,height: 15.0.h,),
-                    //   )
                   )
                     ],
                   ),),
+
+            if(qrData.isNotEmpty)
+              Column(
+                children: [
+
+                  QrImageView(
+                    data: qrData,
+                    version: QrVersions.auto,
+                    size: 30.0.h,
+                  ),
+
+                  SizedBox(height: 2.0.h),
+
+                   Text(
+                    Translations.of(context)!.remainingTime + " "+secondsLeft.toString(),
+                    style: Style.Secondry14Bold,
+                  ),
+
+                ],
+              ),
               ],
             )
 
@@ -133,16 +164,53 @@ class _AboutUsPageState extends State<LoyaltySystemPage> {
     });
   }
 
+  void generateQr() {
+    setState(() {
+      qrData = QrEncryption.encrypt(
+      userId: DelegateData.delegateData!.id!,
+      points: BalancePointData.Point,
+    );
+    });
+  }
 
-
-  Future<void> StartFun()async {
-      showLoading();
-      var x= await ConvertPointsFun(context);
-      hideLoading();
-      if(x==true)
-      {
-        Navigator.pushNamedAndRemoveUntil(context, homeRoute,(Route<dynamic> r)=>false);
+  void startQrTimer() {
+    generateQr();
+    secondsLeft = 60;
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
+      if (!mounted) {
+        timer.cancel();
+        return;
       }
 
+      if (secondsLeft == 0) {
+        timer.cancel();
+
+        setState(() {
+          qrData = "";
+        });
+        showLoading();
+        var xx= await AppMainPageFun(context);
+        if(xx != null )
+        {
+          setState(() {
+            BalancePointData.Balance=xx.walletBalance!;
+            BalancePointData.Point=xx.pointsBalance!;
+          });
+        }
+        hideLoading();
+        return;
+      }
+
+      setState(() {
+        secondsLeft--;
+      });
+    });
   }
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
 }
