@@ -55,6 +55,8 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
         child:  Theme(
         data: Theme.of(context).copyWith(primaryColor: Style.SecondryColor),
        child: TextFormField(
+         minLines: 1,
+         maxLines: 5,
          textDirection: textDirection,
          scrollPadding: EdgeInsets.only(bottom:MediaQuery.of(context).viewInsets.bottom),
          autovalidateMode :AutovalidateMode.onUserInteraction,

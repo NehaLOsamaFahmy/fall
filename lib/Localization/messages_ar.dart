@@ -175,5 +175,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "verifyToEmail": MessageLookupByLibrary.simpleMessage("تم إرسال كود التحقق إلى بريدك الإلكتروني"),
     "EmailorMobile": MessageLookupByLibrary.simpleMessage("البريد الالكترونى او رقم الجوال"),
     "EmailorMobile_Validation": MessageLookupByLibrary.simpleMessage("ادخل البريد الالكترونى او رقم الجوال"),
+    "help":MessageLookupByLibrary.simpleMessage("نحن هنا لمساعدتك"),
+    "whatsApp":MessageLookupByLibrary.simpleMessage("واتساب"),
+    "contactWhatsApp":MessageLookupByLibrary.simpleMessage("تواصل سريع ومباشر"),
+    "webSite":MessageLookupByLibrary.simpleMessage("الموقع الإلكتروني"),
+    "contactWebSite":MessageLookupByLibrary.simpleMessage("تصفح موقعنا الرسمي"),
+    "sendMsg":MessageLookupByLibrary.simpleMessage("إرسال رسالة للدعم"),
   };
 }

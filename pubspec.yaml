@@ -66,6 +66,9 @@ dependencies:
   rflutter_alert: ^2.0.7
   loading_overlay: ^0.3.0
   provider: ^6.1.2
+  maps_launcher: ^3.0.0
+  share_plus: ^12.0.2
+  font_awesome_flutter: ^11.0.0
 
 
 dev_dependencies:

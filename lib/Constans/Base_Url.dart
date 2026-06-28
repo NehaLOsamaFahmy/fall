@@ -26,6 +26,8 @@ const String ConvertPoints ="Wallet/ConvertPoints";
 const String Delete_user ="customers/delete";
 const String resend_verification ="customers/resend-verification";
 
+const String ContactData ="contact/getConnectLinks";
+
 
 
 

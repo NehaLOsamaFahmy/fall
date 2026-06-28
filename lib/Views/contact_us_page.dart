@@ -4,9 +4,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:babco/Models/DataModel.dart';
 import 'package:babco/Shared_View/DrawerView.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../Api/Contact_us/GetContactsDataApi.dart';
+import '../Api/Contact_us/SendCommentApi.dart';
 import '../Api/DataApi.dart';
 import '../Api/Login/LoginApi.dart';
 import '../Constans/Style.dart';
@@ -17,6 +21,7 @@ import '../Shared_Data/DelegateData.dart';
 import '../Shared_View/AlertView.dart';
 import '../Shared_View/AnimatedButton.dart';
 import '../Shared_View/AppBarView.dart';
+import '../Shared_View/GlobalTextField.dart';
 
 
 class Connect_usPage extends StatefulWidget {
@@ -36,22 +41,40 @@ class _Connect_usPageState extends State<Connect_usPage> {
   bool _isLoading = false;
   DataModel SelectData= new DataModel(-1, "name","","","");
   List<DataModel> data=<DataModel>[];
+  String whatsappNumber = "";
+  String websiteUrl = "";
+
+  Future<void> openWhatsApp() async {
+    final url = "https://wa.me/$whatsappNumber";
+    await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+  }
+
+  Future<void> openWebsite() async {
+    if (!websiteUrl.startsWith('http')) {
+      websiteUrl = "https://$websiteUrl";
+    }
+    final uri = Uri.parse(websiteUrl);
+
+    if (!await canLaunchUrl(uri)) {
+      print("Invalid URL: $websiteUrl");
+      return;
+    }
+
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
+  }
 
   @override
   void initState() {
     super.initState();
-
-    Future.delayed(Duration.zero, () {
-      GetData();
-    });
+    getData();
   }
 
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      //resizeToAvoidBottomInset: false,
         appBar: AppBarWithBack(context, Translations.of(context)!.Connect_us),
         drawer: DrawerList(context),
+        backgroundColor: Colors.white,
         body:SafeArea(child: LoadingOverlay(
             isLoading: _isLoading,
             opacity: 0.2,
@@ -71,227 +94,130 @@ class _Connect_usPageState extends State<Connect_usPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(height: 4.0.h,),
-      /*
-      Container(
-        decoration: Style.BoxDecorationBoxShadowGreyColor,
-        padding: EdgeInsets.symmetric(
-            vertical: 0.5.h, horizontal: 2.0.w),
-         margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 5.0.w),
-        child:   PopupMenuButton(
-            child:
-            Container(margin: EdgeInsets.symmetric(
-                  vertical: 0.0.h, horizontal: 0.0.w),child:
-            Row(
-              children: [
-                Expanded(child:Center(child:  Text(SelectData.name!, style: Style.MainText12,))),
-                Icon(Icons.arrow_drop_down,
-                    color: Style.SecondryColor,
-                    size: 2.5.h),
-              ],
-            ),
-            ),
-
-            itemBuilder: (context) {
-              return data.map((DataModel choice) {
-                return PopupMenuItem(
-                    value: choice,
-                    child: Row(
-                      children: [
-                        Padding(padding: EdgeInsets.symmetric(
-                            vertical: 0.0.h,
-                            horizontal: 1.0.w),),
-                        Expanded(
-                          child: Text(choice.name.toString(),
-                            style: Style.MainText14,),),
-                      ],)
-                );
-              }).toList();
-            },
-            onSelected: (DataModel value) {
-              setState(() {
-                SelectData = value;
-              });
-            },
-          )),
-        */  Container(
-            margin: EdgeInsets.symmetric(horizontal: 5.0.w, vertical: 3.0.h),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 5.0.w, vertical: 0.0.h),
             child: Form(
               key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                /*  Row(
-                    children: [
-                      Expanded(child: Theme(
-                        data: Theme.of(context).copyWith(primaryColor: Style
-                            .SecondryColor),
-                        child: TextFormField(
-                            controller: name1Controller,
-                            cursorColor: Style.SecondryColor,
-                            style: TextStyle(
-                                fontSize: 16.0.sp, color: Style.MainTextColor),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return Translations.of(context)!
-                                    .First_name_Validation;
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                                prefixIcon: Icon(
-                                  Icons.person, size:3.0.h,),
-                                hintText: Translations.of(context)!.First_name,
-                                // labelStyle: TextStyle(fontSize: 16.0.sp, color: Style.GreyColor),
-                                //  labelText: Translations.of(context)!.Code,
-                                hintStyle: TextStyle(fontSize: 16.0.sp,
-                                  color: Style.GreyColor,),
-                                errorStyle: TextStyle(fontSize: 16.0.sp,
-                                    color:Style.MainTextColor)
-                            ),
-                            keyboardType: TextInputType.name,
-                            onEditingComplete: () {
-                              FocusScope.of(context).unfocus();
-                            }
-                        ),),),
-                      SizedBox(width: 5.0.w,),
-                      Expanded(child: Theme(
-                        data: Theme.of(context).copyWith(primaryColor: Style
-                            .SecondryColor),
-                        child: TextFormField(
-                            controller: name2Controller,
-                            cursorColor: Style.SecondryColor,
-                            style: TextStyle(
-                                fontSize: 16.0.sp, color: Style.MainTextColor),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return Translations.of(context)!
-                                    .Last_name_Validation;
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                                prefixIcon: Icon(
-                                  Icons.person, size: 3.0.h,),
-                                hintText: Translations.of(context)!.Last_name,
-                                // labelStyle: TextStyle(fontSize: 16.0.sp, color: Style.GreyColor),
-                                //  labelText: Translations.of(context)!.Code,
-                                hintStyle: TextStyle(fontSize: 16.0.sp,
-                                  color: Style.GreyColor,),
-                                errorStyle: TextStyle(fontSize: 16.0.sp,
-                                    color:Style.MainTextColor)
-                            ),
-                            keyboardType: TextInputType.name,
-                            onEditingComplete: () {
-                              FocusScope.of(context).unfocus();
-                            }
-                        ),),)
-                    ],
-                  ),
-                  SizedBox(height: 1.0.h,),
-                  Theme(
-                    data: Theme.of(context).copyWith(
-                        primaryColor: Style.SecondryColor),
-                    child: TextFormField(
-                        controller: mobileController,
-                        cursorColor: Style.SecondryColor,
-                        style: TextStyle(
-                            fontSize: 16.0.sp, color: Style.MainTextColor),
-                        validator: (value) {
-                          if (value!.isEmpty|| value.length < 9) {
-                            return Translations.of(context)!
-                                .Phone_number_Validation;
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.phone_android, size: 3.0.h,),
-                            hintText: Translations.of(context)!.Phone_number,
-                            // labelStyle: TextStyle(fontSize: 16.0.sp, color: Style.GreyColor),
-                            //  labelText: Translations.of(context)!.Code,
-                            hintStyle: TextStyle(fontSize: 16.0.sp,
-                              color: Style.GreyColor,),
-                            errorStyle: TextStyle(fontSize: 16.0.sp,
-                                color:Style.MainTextColor)
-                        ),
-                        keyboardType: TextInputType.number,
-                        onEditingComplete: () {
-                          FocusScope.of(context).unfocus();
-                        }
-                    ),),
-                  SizedBox(height: 1.0.h,),
-                  Theme(
-                    data: Theme.of(context).copyWith(
-                        primaryColor: Style.SecondryColor),
-                    child: TextFormField(
-                        controller: emailController,
-                        cursorColor: Style.SecondryColor,
-                        style: TextStyle(
-                            fontSize: 16.0.sp, color: Style.MainTextColor),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return Translations.of(context)!.Email_Validation;
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.email_outlined, size: 3.0.h,),
-                            hintText: Translations.of(context)!.Email,
-                            // labelStyle: TextStyle(fontSize: 16.0.sp, color: Style.GreyColor),
-                            //  labelText: Translations.of(context)!.Code,
-                            hintStyle: TextStyle(fontSize: 16.0.sp,
-                              color: Style.GreyColor,),
-                            errorStyle: TextStyle(fontSize: 16.0.sp,
-                                color:Style.MainTextColor)
-                        ),
-                        keyboardType: TextInputType.emailAddress,
-                        onEditingComplete: () {
-                          FocusScope.of(context).unfocus();
-                        }
-                    ),),
-                  *///SizedBox(height: 4.0.h,),
-                  Container(
-                      decoration: Style.BoxDecorationBoxShadowGreyColor,
-                      padding: EdgeInsets.symmetric(
-                          vertical: 0.5.h, horizontal: 2.0.w),
-                     // margin: EdgeInsets.symmetric(vertical: 0.5.h, horizontal: 5.0.w),
-                      child: Theme(
-                        data: Theme.of(context).copyWith(
-                            primaryColor: Style.SecondryColor),
-                        child: TextFormField(
-                            maxLines: 6,
-                             controller: commentController,
-                            cursorColor: Style.SecondryColor,
-                            style: TextStyle(
-                                fontSize: 16.0.sp, color: Style.MainTextColor),
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: Translations.of(context)!.comment,
-                                // labelStyle: TextStyle(fontSize: 16.0.sp, color: Style.GreyColor),
-                                //  labelText: Translations.of(context)!.Code,
-                                hintStyle: TextStyle(fontSize: 16.0.sp,
-                                  color: Style.GreyColor,),
-                                errorStyle: TextStyle(fontSize: 16.0.sp,
-                                    color:Style.MainTextColor)
-                            ),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return Translations.of(context)!.comment_Validation;
-                              }
-                              return null;
-                            },
-                            keyboardType: TextInputType.text,
-                            onEditingComplete: () {
-                              FocusScope.of(context).unfocus();
-                            }
-                        ),)),
 
-                  Container(
-                      margin: EdgeInsets.symmetric(horizontal: 14.0.w, vertical: 10.0.h),
-                      child:
-                      AnimatedButton(text:Translations.of(context)!.send,onTapped: startFun,))
+                  Image(image: AssetImage('lib/assets/logo.png'),
+                    width: 60.0.w,
+                    height: 15.0.h,),
+                  SizedBox(height: 2.0.h),
+                  Text(
+                    Translations.of(context)!.help,
+                    style: Style.BlackText18Bold,
+                  ),
+
+                  SizedBox(height: 3.0.h),
+
+                  // WhatsApp
+                  Card(
+                    color: const Color(0xFFE8F5E9), // أخضر فاتح مريح
+                    elevation: 6, // قوة الشادو
+                    shadowColor: Colors.black.withOpacity(0.2),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: ListTile(
+                      contentPadding:
+                      EdgeInsets.symmetric(horizontal: 2.0.w, vertical: .5.h),
+                      leading: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.green.withOpacity(0.10),
+                          shape: BoxShape.circle,
+                        ),
+                        child: FaIcon(
+                          FontAwesomeIcons.whatsapp,
+                          color: Colors.green,
+                          size: 4.0.h,
+                        ),
+                      ),
+                      title:  Text(
+                        Translations.of(context)!.whatsApp,
+                        style: Style.MainText14Bold,
+                      ),
+                      subtitle:  Text(Translations.of(context)!.contactWhatsApp,
+                        style: Style.MainText14,),
+                      trailing:  Icon(Icons.arrow_forward_ios, size: 2.0.h),
+                      onTap: openWhatsApp,
+                    ),
+                  ),
+                  SizedBox(height: 2.0.h),
+                  // Website
+                  Card(
+                    color: const Color(0xFFE3F2FD), // أزرق فاتح
+                    elevation: 6,
+                    shadowColor: Colors.black.withOpacity(0.2),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: ListTile(
+                      contentPadding:EdgeInsets.symmetric(horizontal: 2.0.w, vertical: 0.5.h),
+                      leading: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.blue.withOpacity(0.15),
+                          shape: BoxShape.circle,
+                        ),
+                        child:  Icon(Icons.language, color: Colors.blue, size: 3.5.h,),
+                      ),
+                      title:  Text(
+                        Translations.of(context)!.webSite,
+                        style: Style.MainText14Bold,
+                      ),
+                      subtitle:  Text(Translations.of(context)!.contactWebSite,
+                        style: Style.MainText14,),
+                      trailing:  Icon(Icons.arrow_forward_ios, size: 2.0.h),
+                      onTap: openWebsite,
+                    ),
+                  ),
+                  SizedBox(height: 3.0.h),
+                  GlobalTextField(
+                    controller: mobileController,
+                    keyboardType: TextInputType.phone,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return Translations.of(context)!.Phone_number_Validation;
+                      }
+
+                      final phone = value.trim();
+
+                      final saudiNationalRegex = RegExp(r'^05[0-9]{8}$');
+
+                      if (!saudiNationalRegex.hasMatch(phone)) {
+                        return Translations.of(context)!.phone_invalid;
+                      }
+
+                      return null;
+                    },
+                    icon: Icons.phone_android,
+                    label: Translations.of(context)!.Phone_number,
+                    onChanged: (String p1) {  },
+                  ),
+
+                  SizedBox(height: 1.0.h),
+                  GlobalTextField(
+                    controller:commentController ,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return Translations.of(context)!.comment_Validation;
+                      }
+                      if (value.trim().length < 2) {
+                        return Translations.of(context)!.name_Validation;
+                      }
+
+                      return null;
+                    },
+                    icon: Icons.comment,
+                    label: Translations.of(context)!.comment,
+                    onChanged: (String p1) {  },
+                  ),
+                  SizedBox(height: 3.0.h),
+                      AnimatedButton(text:Translations.of(context)!.sendMsg,onTapped: ()=>startFun(),)
 
                 ],
               ),
@@ -316,41 +242,32 @@ class _Connect_usPageState extends State<Connect_usPage> {
     });
   }
 
-  Future<void> GetData()
-  async {
-  /*  showLoading();
-    setState(() {
-      data=<DataModel>[
-         DataModel(0, Translations.of(context)!.inquiry ,"","",""),
-         DataModel(1, Translations.of(context)!.complaint,"" ,"",""),
-         DataModel(2, Translations.of(context)!.suggestion,"" ,"",""),
-      ];
-      SelectData=data[0];
-    });
-    hideLoading();*/
- /*   showLoading();
-
-    if (DelegateData.delegateData != null &&
-        DelegateData.delegateData!.id! > 0) {
-      hideLoading();
-    }
-    else {
-
-      await AlertView2(context);
-    }
-    hideLoading();*/
-  }
 
   Future<void> startFun() async {
     if (_formKey.currentState!.validate()) {
       showLoading();
-      var res = await Contact_us(context, mobileController.text,
-          name1Controller.text+name2Controller.text, commentController.text,emailController.text,SelectData.id.toString());
+      var res = await Contact_us(context, mobileController.text,commentController.text);
       hideLoading();
       if (res == true) {
         Navigator.pushNamed(context, homeRoute);
       }
       hideLoading();
     }
+  }
+  Future<void> getData() async {
+    if(DelegateData.delegateData!= null && DelegateData.delegateData!.mobile!=null) {
+      setState(() {
+      mobileController.text = DelegateData.delegateData!.mobile!;
+      });
+    }
+    showLoading();
+    var x=await GetContactUs(context);
+    if(x != null) {
+      setState(() {
+        whatsappNumber= x.whatsappNumber!;
+        websiteUrl=  x.siteLink!;
+      });
+    }
+    hideLoading();
   }
 }

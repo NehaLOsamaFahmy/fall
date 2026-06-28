@@ -174,5 +174,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "verifyToEmail": MessageLookupByLibrary.simpleMessage("A verification code has been sent to"),
     "EmailorMobile": MessageLookupByLibrary.simpleMessage("Email or Mobile"),
     "EmailorMobile_Validation": MessageLookupByLibrary.simpleMessage("Please enter your email or mobile number"),
+    "help":MessageLookupByLibrary.simpleMessage("We are here to help you"),
+    "whatsApp":MessageLookupByLibrary.simpleMessage("WhatsApp"),
+    "contactWhatsApp":MessageLookupByLibrary.simpleMessage("Quick and direct communication"),
+    "webSite":MessageLookupByLibrary.simpleMessage("Website"),
+    "contactWebSite":MessageLookupByLibrary.simpleMessage("Browse our official website"),
+    "sendMsg":MessageLookupByLibrary.simpleMessage("Send a message for support"),
   };
 }

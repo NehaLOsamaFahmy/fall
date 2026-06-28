@@ -947,5 +947,40 @@ String get verificationCode {
     );
   }
 
+  String get help {
+    return Intl.message(
+      'help',
+      name: 'help',
+    );
+  }
+  String get sendMsg {
+    return Intl.message(
+      'sendMsg',
+      name: 'sendMsg',
+    );
+  } String get contactWebSite {
+    return Intl.message(
+      'contactWebSite',
+      name: 'contactWebSite',
+    );
+  }
+  String get webSite {
+    return Intl.message(
+      'webSite',
+      name: 'webSite',
+    );
+  }
+  String get contactWhatsApp {
+    return Intl.message(
+      'contactWhatsApp',
+      name: 'contactWhatsApp',
+    );
+  }
+  String get whatsApp {
+    return Intl.message(
+      'whatsApp',
+      name: 'whatsApp',
+    );
+  }
 
 }
