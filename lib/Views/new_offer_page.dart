@@ -36,6 +36,8 @@ class _NewOfferPageState extends State<NewOfferPage> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+
+        backgroundColor: Colors.white,
         appBar: AppBarWithBack(
             context, Translations.of(context)!.Offers_discounts),
         drawer: DrawerList(context),

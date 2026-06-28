@@ -31,7 +31,7 @@ class OtpPage extends StatelessWidget {
         builder: (context, vm, child) {
           return Scaffold(
             backgroundColor: Colors.white,
-            appBar: AppBarWithBack(
+            appBar: AppBarWithBackOnly(
               context,
               Translations.of(context)!.verifyAccount,
             ),

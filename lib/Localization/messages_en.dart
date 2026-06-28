@@ -172,5 +172,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "remaining_time": MessageLookupByLibrary.simpleMessage("Remaining Time"),
     "resend_code": MessageLookupByLibrary.simpleMessage("Resend Code"),
     "verifyToEmail": MessageLookupByLibrary.simpleMessage("A verification code has been sent to"),
+    "EmailorMobile": MessageLookupByLibrary.simpleMessage("Email or Mobile"),
+    "EmailorMobile_Validation": MessageLookupByLibrary.simpleMessage("Please enter your email or mobile number"),
   };
 }

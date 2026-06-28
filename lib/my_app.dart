@@ -16,7 +16,7 @@ import 'Shared_Data/DelegateData.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'ViewModel/LoginViewModel.dart';
+import 'ViewModels/LoginViewModel/LoginViewModel.dart';
 
 
 

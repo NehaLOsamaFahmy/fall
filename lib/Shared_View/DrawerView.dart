@@ -171,7 +171,11 @@ DrawerList(BuildContext context,{int id=0})
                      Navigator.pop(context);
                     await Future.delayed(Duration(milliseconds: 300));
                      model.changeDirection();
-                      Navigator.  pushNamed(context, startRoute);
+                     Navigator.pushNamedAndRemoveUntil(
+                       context,
+                       homeRoute,
+                           (route) => false,
+                     );
                    }
 
                ),

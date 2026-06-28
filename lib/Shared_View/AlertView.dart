@@ -61,7 +61,7 @@ AlertView2(BuildContext context)async {
           ),
           onPressed: () {
             Navigator.pop(context);
-            Navigator.pushReplacementNamed(context, startRoute);
+            Navigator.pushReplacementNamed(context, loginRoute);
           },
           color: Colors.black12,
           // padding:  EdgeInsets.fromLTRB(30.0.w,0, 30.0.w, 0),

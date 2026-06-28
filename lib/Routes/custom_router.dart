@@ -30,12 +30,11 @@ import '../Views/map_page.dart';
 import '../Views/new_offer_page.dart';
 import '../Shared_Data/DelegateData.dart';
 import '../Views/home_page.dart';
-import '../Views/login_page.dart';
+import '../Views/LoginPages/login_page.dart';
 import '../Views/not_found_page.dart';
 import '../Views/pay_page.dart';
 import '../Views/rate_page.dart';
 import '../Views/services_selected_page.dart';
-import '../Views/startPage.dart';
 import 'route_constants.dart';
 class CustomRouter {
   static Route<dynamic> generatedRoute(RouteSettings settings) {
@@ -47,18 +46,15 @@ class CustomRouter {
             return MaterialPageRoute(builder: (_) => HomePage());
           }
           else {
-            return MaterialPageRoute(builder: (_) => startPage());
+            return MaterialPageRoute(builder: (_) => LoginPage());
           }
         }
         catch(e){
-          return MaterialPageRoute(builder: (_) => startPage());
+          return MaterialPageRoute(builder: (_) => LoginPage());
         }
         break;
       case loginRoute:
-        {
-          final args= settings.arguments as String;
-          return MaterialPageRoute(builder: (_) => LoginPage(mobile:args));
-        }
+          return MaterialPageRoute(builder: (_) => LoginPage());
       case homeRoute:
         return MaterialPageRoute(builder: (_) => HomePage());
       case deleteAccountRoute:

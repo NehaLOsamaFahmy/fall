@@ -935,6 +935,16 @@ String get verificationCode {
       'resendCode',
       name: 'resendCode',
     );
+  }String get EmailorMobile {
+    return Intl.message(
+      'EmailorMobile',
+      name: 'EmailorMobile',
+    );
+  }String get EmailorMobile_Validation {
+    return Intl.message(
+      'EmailorMobile_Validation',
+      name: 'EmailorMobile_Validation',
+    );
   }
 
 

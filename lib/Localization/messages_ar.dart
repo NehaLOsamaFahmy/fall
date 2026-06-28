@@ -173,5 +173,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "remainingTime": MessageLookupByLibrary.simpleMessage("الوقت المتبقي"),
     "resendCode": MessageLookupByLibrary.simpleMessage("إعادة إرسال الكود"),
     "verifyToEmail": MessageLookupByLibrary.simpleMessage("تم إرسال كود التحقق إلى بريدك الإلكتروني"),
+    "EmailorMobile": MessageLookupByLibrary.simpleMessage("البريد الالكترونى او رقم الجوال"),
+    "EmailorMobile_Validation": MessageLookupByLibrary.simpleMessage("ادخل البريد الالكترونى او رقم الجوال"),
   };
 }

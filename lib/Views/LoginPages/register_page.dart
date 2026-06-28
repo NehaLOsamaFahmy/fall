@@ -23,7 +23,7 @@ class RegisterPage extends StatelessWidget {
         builder: (context, vm, child) {
 
           return Scaffold(
-            appBar: AppBarWithBack(
+            appBar: AppBarWithBackOnly(
                 context, Translations.of(context)!.New_user),
             backgroundColor: Colors.white,
             body:LoadingOverlay(

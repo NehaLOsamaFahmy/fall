@@ -8,7 +8,7 @@ import '../Localization/Translations.dart';
 import '../Shared_View/AnimatedButton.dart';
 import '../Shared_View/AppBarView.dart';
 import '../Shared_View/DrawerView.dart';
-import '../ViewModel/LoginViewModel.dart';
+import '../ViewModels/LoginViewModel/LoginViewModel.dart';
 
 class deleteAccountPage extends StatefulWidget {
   @override
@@ -31,7 +31,7 @@ class _deleteAccountState extends State<deleteAccountPage> {
         body: Consumer<LoginViewModel>(
             builder: (context, viewModel, child) {
               return LoadingOverlay(
-                  isLoading: viewModel.loading,
+                  isLoading: viewModel.isLoading,
                   opacity: 0.2,
                   color: Style.MainColor,
                   progressIndicator: CircularProgressIndicator(

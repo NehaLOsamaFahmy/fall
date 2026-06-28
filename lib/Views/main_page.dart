@@ -36,6 +36,8 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+        backgroundColor: Colors.white,
         appBar: AppBarWithlanguage(
             context, Translations.of(context)!.Home_page),
         drawer: DrawerList(context),

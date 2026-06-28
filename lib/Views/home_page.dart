@@ -48,9 +48,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
     return  Scaffold(
-      //resizeToAvoidBottomInset: false,
-      //appBar: AppBarWithlanguage(context, _pageTitle),
-      //drawer: DrawerList(context),
       bottomNavigationBar: CurvedNavigationBar(
         height: navHeight,
         key: _bottomNavigationKey,
