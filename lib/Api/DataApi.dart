@@ -11,6 +11,7 @@ import '../Localization/Translations.dart';
 import '../Models/AboutModel.dart';
 import '../Models/DataModel.dart';
 import '../Models/DelegateDataModel.dart';
+import '../Models/RegionModel.dart';
 import '../Shared_Data/LanguageData.dart';
 import '../Shared_Data/NetworkCheckData.dart';
 import '../Shared_View/AlertView.dart';
@@ -153,7 +154,8 @@ Future<List<AboutModel>?> About_us(BuildContext context) async {
 }
 
 
-Future<List<CityModel>?> GetCity(BuildContext context ) async {
+
+Future<List<RegionModel>?> GetRegion(BuildContext context ) async {
   try {
     bool InternetConntected = await hasNetwork();
     if (InternetConntected) {
@@ -171,11 +173,11 @@ Future<List<CityModel>?> GetCity(BuildContext context ) async {
         if (response.statusCode == 200) {
           Map valueMap = jsonDecode(response.body);
           if (valueMap['code'] == 200) {
-            print( " fn_GetCity200 ::: ${valueMap['message']} ${valueMap['data']}");
-            List<CityModel> obj= <CityModel>[];
+            print( " fn_GetRegion200 ::: ${valueMap['message']} ${valueMap['data']}");
+            List<RegionModel> obj= <RegionModel>[];
             if (valueMap['data'] != null) {
               valueMap['data'].forEach((v) {
-                obj!.add(new CityModel.fromJson(v));
+                obj!.add(new RegionModel.fromJson(v));
               });
             }
 
@@ -184,7 +186,7 @@ Future<List<CityModel>?> GetCity(BuildContext context ) async {
           else {
             await AlertView(
                 context, "error", Translations.of(context)!.ErrorTitle,valueMap['data'].toString());
-            print( "fn_GetCity400 ::: ${valueMap['message']} ${valueMap['data']}");
+            print( "fn_GetRegion400 ::: ${valueMap['message']} ${valueMap['data']}");
             return null;
           }
         }
@@ -192,7 +194,7 @@ Future<List<CityModel>?> GetCity(BuildContext context ) async {
           await AlertView(
               context, "error", Translations.of(context)!.ErrorTitle,
               "error_statusCode ${response.statusCode} ${response.reasonPhrase}");
-          print( "fn_GetCity400 ::: ${response.statusCode} ");
+          print( "fn_GetRegion400 ::: ${response.statusCode} ");
           return null;
         }
       }
@@ -201,7 +203,7 @@ Future<List<CityModel>?> GetCity(BuildContext context ) async {
         await AlertView(
             context, "error", Translations.of(context)!.ErrorTitle,
             "Exception : ${e.toString()}");
-        print( "fn_GetCityException ::: ${e} ");
+        print( "fn_GetRegionException ::: ${e} ");
         return null;
       }
     }
@@ -217,7 +219,7 @@ Future<List<CityModel>?> GetCity(BuildContext context ) async {
     await AlertView(
         context, "error", Translations.of(context)!.ErrorTitle,
         "Exception : ${e.toString()}");
-    print("fn_GetCitysException ::: ${e} ");
+    print("fn_GetRegionException ::: ${e} ");
     return null;
   }
 }
@@ -290,7 +292,6 @@ Future<List<CityModel>?> GetNeighborhoods(BuildContext context ,String city) asy
     return null;
   }
 }
-
 
 Future<String?> StationReviews(BuildContext context) async {
   try {

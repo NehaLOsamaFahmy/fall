@@ -10,11 +10,13 @@ class PinDataModel {
   double lng=0;
   double lat=0;
   String? cityId;
-  String? neighborhoodId;
+  String? region_id;
 
 
 
-  PinDataModel(this.id, this.name, this.address,this.phone,this.rate,this.lat,this.lng,this.images ,this.mail);
+  PinDataModel(this.id, this.name,
+      this.address,this.phone,this.rate,
+      this.lat,this.lng,this.images ,this.mail);
   PinDataModel.fromJson(Map<String, dynamic> json) {
 
     id = json['id'] != null ?json['id'] :0;
@@ -23,17 +25,17 @@ class PinDataModel {
     phone = json['phone'] != null ?json['phone']:"";
     mail = json['email'] != null ?json['email']:"";
     if(json['lat'] != null)
-      {
-       var x= double.tryParse( json['lat'].toString());
-       if(x!=null)
-         lat=x;
-       else
-         lat=0;
-      }
-    else
-      {
+    {
+      var x= double.tryParse( json['lat'].toString());
+      if(x!=null)
+        lat=x;
+      else
         lat=0;
-      }
+    }
+    else
+    {
+      lat=0;
+    }
     if(json['lng'] != null)
     {
       var x= double.tryParse( json['lng'].toString());
@@ -50,7 +52,7 @@ class PinDataModel {
     rate = json['rate'] != null ?json['rate'].toString():"0";
     images = json['image'].cast<String>();
     cityId = json['cityId'] != null ?json['cityId'].toString():"";
-    neighborhoodId = json['neighborhoodId'] != null ?json['neighborhoodId'].toString():"";
+    region_id = json['region_id'] != null ?json['region_id'].toString():"";
 
   }
 
