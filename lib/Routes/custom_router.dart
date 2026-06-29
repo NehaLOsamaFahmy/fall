@@ -1,5 +1,6 @@
 
 import 'package:babco/Models/DelegateDataModel.dart';
+import 'package:babco/Views/Evaluation/StationEvaluationPage.dart';
 import 'package:babco/Views/LoginPages/otp_code_page.dart';
 import 'package:babco/Views/LoginPages/register_page.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,6 @@ class CustomRouter {
         catch(e){
           return MaterialPageRoute(builder: (_) => LoginPage());
         }
-        break;
       case loginRoute:
           return MaterialPageRoute(builder: (_) => LoginPage());
       case homeRoute:
@@ -149,6 +149,10 @@ class CustomRouter {
         case LoyaltySystemRoute:
         {
           return MaterialPageRoute(builder: (_) => LoyaltySystemPage());
+        }
+        case StationEvaluationRoute:
+        {
+          return MaterialPageRoute(builder: (_) => StationEvaluationPage());
         }
         case NewOfferRoute:
         {
