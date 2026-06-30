@@ -18,6 +18,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'ViewModels/LoginViewModel/LoginViewModel.dart';
 
+final RouteObserver<ModalRoute<void>> routeObserver = RouteObserver<ModalRoute<void>>();
+
 
 
 class MyApp extends StatefulWidget {
@@ -86,6 +88,7 @@ class _MyAppState extends State<MyApp> {
                       color: Colors.white,
                       theme: ThemeData(primarySwatch: MainColor,),
                       title: "خدمات الوقود",
+                      navigatorObservers: [routeObserver],
                       onGenerateRoute: CustomRouter.generatedRoute,
                       initialRoute: splashRoute,
                     );

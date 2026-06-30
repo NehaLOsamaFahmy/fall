@@ -13,6 +13,7 @@ import '../Routes/route_constants.dart';
 import '../Shared_Data/ServicesData.dart';
 import '../Shared_View/AppBarView.dart';
 import '../Shared_View/DrawerView.dart';
+import '../my_app.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -21,7 +22,7 @@ class MainScreen extends StatefulWidget {
   State<MainScreen> createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends State<MainScreen> with RouteAware {
   bool _isLoading = false;
 
   List<String> list = [];
@@ -32,11 +33,33 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
     GetData();
   }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context)!);
+  }
 
-    setState(() {});
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    // Called when the current route has been popped off and current route shows up
+    refreshData();
+  }
+
+  Future<void> refreshData() async {
+    var xx = await AppMainPageFun(context);
+    if (xx != null) {
+      setState(() {
+        BalancePointData.Balance = xx.walletBalance!;
+        BalancePointData.Point = xx.pointsBalance!;
+      });
+    }
   }
   @override
   Widget build(BuildContext context) {

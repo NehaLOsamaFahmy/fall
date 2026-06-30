@@ -29,21 +29,42 @@ class LoyaltySystemPage extends StatefulWidget {
   _AboutUsPageState createState() => _AboutUsPageState();
 }
 
-class _AboutUsPageState extends State<LoyaltySystemPage> {
+class _AboutUsPageState extends State<LoyaltySystemPage> with WidgetsBindingObserver {
 
   bool _isLoading = false;
   String data="";
   bool login =false;
   Timer? _timer;
   String qrData = "";
-  int secondsLeft = 60;
+  int secondsLeft = 20;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     Future.delayed(Duration.zero, () {
       GetData();
     });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.resumed) {
+      refreshData();
+    }
+  }
+
+  Future<void> refreshData() async {
+    showLoading();
+    var result = await AppMainPageFun(context);
+    if (result != null) {
+      setState(() {
+        BalancePointData.Balance = result.walletBalance!;
+        BalancePointData.Point = result.pointsBalance!;
+      });
+    }
+    hideLoading();
   }
   @override
   Widget build(BuildContext context) {
@@ -183,7 +204,7 @@ class _AboutUsPageState extends State<LoyaltySystemPage> {
 
   void startQrTimer() {
     generateQr();
-    secondsLeft = 60;
+    secondsLeft = 20;
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       if (!mounted) {
@@ -217,6 +238,7 @@ class _AboutUsPageState extends State<LoyaltySystemPage> {
   }
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _timer?.cancel();
     super.dispose();
   }
