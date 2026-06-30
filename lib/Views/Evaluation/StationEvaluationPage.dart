@@ -5,15 +5,15 @@ import 'package:babco/Shared_View/AppBarView.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_overlay/loading_overlay.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../Constans/Style.dart';
 import '../../Models/EvaluationModel.dart';
 import '../../Models/PinDataModel.dart';
+import '../../Shared_View/DrawerView.dart';
 import '../../ViewModels/EvaluationViewModel/StationEvaluationViewModel.dart';
-import 'TabBar.dart';
+import 'QrScannerView.dart';
 
 class StationEvaluationPage extends StatelessWidget {
   const StationEvaluationPage({super.key});
@@ -87,8 +87,9 @@ class _StationEvaluationBodyState
             backgroundColor: Colors.white,
             appBar: AppBarWithBack(
               context,
-              Translations.of(context)!.Service_Evaluation,
+              Translations.of(context)!.Station_Evaluation,
             ),
+            drawer: DrawerList(context),
             body: LoadingOverlay(
               isLoading: vm.loading,
                 opacity: 0.3,
@@ -104,7 +105,7 @@ class _StationEvaluationBodyState
                 AnimatedTabBar(
                   tabs: [
                     TabItem(
-                      label: Translations.of(context)!.Service_Evaluation,
+                      label: Translations.of(context)!.Station_Evaluation,
                       icon: Icons.star_rate_rounded,
                     ),
                     TabItem(
@@ -157,107 +158,11 @@ class _StationEvaluationBodyState
   }
 
   Widget _buildQrTab(StationEvaluationViewModel vm) {
-
-    return Stack(
-      children: [
-
-        MobileScanner(
-          controller: vm.qrScannerController,
-          onDetect: (capture) => vm.onQrDetect(context, capture),
-        ),
-
-        CustomPaint(
-          painter: _QrOverlayPainter(),
-          child: Center(
-            child: SizedBox(
-              width: 65.w,
-              height: 65.w,
-            ),
-          ),
-        ),
-
-        Positioned(
-          top: 3.h,
-          left: 0,
-          right: 0,
-          child: Center(
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 6.w,
-                vertical: 1.2.h,
-              ),
-              decoration: BoxDecoration(
-                color: Style.MainColor.withOpacity(0.85),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.qr_code_scanner,
-                    color: Colors.white,
-                    size: 2.5.h,
-                  ),
-                  SizedBox(width: 2.w),
-                  Text(
-                    "\u0627\u0645\u0633\u062D \u0631\u0645\u0632 QR \u0644\u0644\u062A\u0642\u064A\u064A\u0645",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-
-        if (vm.qrResult != null)
-          Positioned(
-            bottom: 5.h,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: GestureDetector(
-                onTap: () => vm.restartQrScanner(),
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 8.w,
-                    vertical: 1.5.h,
-                  ),
-                  decoration: BoxDecoration(
-                    gradient: Style.LinearGradient1,
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Style.MainColor.withOpacity(0.4),
-                        blurRadius: 10,
-                        offset: Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.refresh, color: Colors.white, size: 2.5.h),
-                      SizedBox(width: 2.w),
-                      Text(
-                        "\u0645\u0633\u062D \u0645\u062C\u062F\u062F\u0627\u064B",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 13.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-
-      ],
+    return QrScannerView(
+      controller: vm.qrScannerController,
+      onDetect: (capture) => vm.onQrDetect(context, capture),
+      scannedResult: vm.qrResult,
+      onRestart: () => vm.restartQrScanner(),
     );
 
   }
@@ -546,7 +451,8 @@ class _StationEvaluationBodyState
       StationEvaluationViewModel vm,
       QuestionModel question,
       int index,
-      ) {
+      )
+  {
 
     return Container(
       margin: EdgeInsets.only(bottom: 2.h),
@@ -631,7 +537,8 @@ class _StationEvaluationBodyState
   Widget _buildQuestionInput(
       StationEvaluationViewModel vm,
       QuestionModel question,
-      ) {
+      )
+  {
 
     switch (question.type) {
 
@@ -907,95 +814,3 @@ class _StationEvaluationBodyState
 
 }
 
-class _QrOverlayPainter extends CustomPainter {
-
-  @override
-  void paint(Canvas canvas, Size size) {
-
-    final paint = Paint()
-      ..color = Colors.black.withOpacity(0.5)
-      ..style = PaintingStyle.fill;
-
-    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), paint);
-
-    final scanSize = size.width * 0.65;
-    final scanRect = Rect.fromCenter(
-      center: Offset(size.width / 2, size.height / 2),
-      width: scanSize,
-      height: scanSize,
-    );
-
-    final clearPaint = Paint()..blendMode = BlendMode.clear;
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(scanRect, Radius.circular(20)),
-      clearPaint,
-    );
-
-    final borderPaint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 3;
-
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(scanRect, Radius.circular(20)),
-      borderPaint,
-    );
-
-    final cornerPaint = Paint()
-      ..color = Style.SecondryColor
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 5
-      ..strokeCap = StrokeCap.round;
-
-    final cornerLength = scanSize * 0.15;
-
-    canvas.drawLine(
-      scanRect.topLeft,
-      Offset(scanRect.left + cornerLength, scanRect.top),
-      cornerPaint,
-    );
-    canvas.drawLine(
-      scanRect.topLeft,
-      Offset(scanRect.left, scanRect.top + cornerLength),
-      cornerPaint,
-    );
-
-    canvas.drawLine(
-      scanRect.topRight,
-      Offset(scanRect.right - cornerLength, scanRect.top),
-      cornerPaint,
-    );
-    canvas.drawLine(
-      scanRect.topRight,
-      Offset(scanRect.right, scanRect.top + cornerLength),
-      cornerPaint,
-    );
-
-    canvas.drawLine(
-      scanRect.bottomLeft,
-      Offset(scanRect.left + cornerLength, scanRect.bottom),
-      cornerPaint,
-    );
-    canvas.drawLine(
-      scanRect.bottomLeft,
-      Offset(scanRect.left, scanRect.bottom - cornerLength),
-      cornerPaint,
-    );
-
-    canvas.drawLine(
-      scanRect.bottomRight,
-      Offset(scanRect.right - cornerLength, scanRect.bottom),
-      cornerPaint,
-    );
-    canvas.drawLine(
-      scanRect.bottomRight,
-      Offset(scanRect.right, scanRect.bottom - cornerLength),
-      cornerPaint,
-    );
-
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-
-}

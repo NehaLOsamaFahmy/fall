@@ -182,6 +182,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "contactWebSite":MessageLookupByLibrary.simpleMessage("تصفح موقعنا الرسمي"),
     "sendMsg":MessageLookupByLibrary.simpleMessage("إرسال رسالة للدعم"),
     "currentPassword": MessageLookupByLibrary.simpleMessage("كلمة السر الحالية"),
-    "newPassword": MessageLookupByLibrary.simpleMessage("كلمة السر الجديدة")
+    "newPassword": MessageLookupByLibrary.simpleMessage("كلمة السر الجديدة"),
+    "scanQr": MessageLookupByLibrary.simpleMessage("امسح رمز ال Qr للتقييم"),
+    "Station_Evaluation": MessageLookupByLibrary.simpleMessage("تقييم المحطات"),
+    "search": MessageLookupByLibrary.simpleMessage("بحث"),
   };
 }

@@ -143,6 +143,11 @@ class StationEvaluationViewModel extends ChangeNotifier {
   }
 
   Future<void> restartQrScanner() async {
+    try
+    {
+      await qrScannerController.stop();
+    }
+    catch(e) {}
     qrResult = null;
     qrScanning = true;
     await qrScannerController.start();

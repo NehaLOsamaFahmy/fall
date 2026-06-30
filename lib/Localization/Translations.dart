@@ -992,6 +992,21 @@ String get verificationCode {
       'newPassword',
       name: 'newPassword',
     );
+  }String get scanQr {
+    return Intl.message(
+      'scanQr',
+      name: 'scanQr',
+    );
+  }String get Station_Evaluation {
+    return Intl.message(
+      'Station_Evaluation',
+      name: 'Station_Evaluation',
+    );
+  }String get search {
+    return Intl.message(
+      'search',
+      name: 'search',
+    );
   }
 
 }

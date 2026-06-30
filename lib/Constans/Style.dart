@@ -47,7 +47,7 @@ class Style {
   static TextStyle Header6 = TextStyle(
       color: WhiteColor, fontSize: 16.0.sp, fontWeight: FontWeight.bold);
   static TextStyle Header7 = TextStyle(
-      color: WhiteColor, fontSize: 16.0.sp, fontWeight: FontWeight.bold);
+      color: WhiteColor, fontSize: 14.0.sp, fontWeight: FontWeight.bold);
   static TextStyle MainText25Bold = TextStyle(
       color: MainTextColor, fontSize: 25.0.sp, fontWeight: FontWeight.bold);
   static TextStyle MainText20Bold = TextStyle(

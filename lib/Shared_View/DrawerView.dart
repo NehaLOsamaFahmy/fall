@@ -145,7 +145,7 @@ DrawerList(BuildContext context,{int id=0})
                    Navigator.pushNamed(context, NewServiceRoute,arguments: value);
                  },),
              Drawer_Items(Icons.star_rate_outlined,
-                 Translations.of(context)!.Service_Evaluation,
+                 Translations.of(context)!.Station_Evaluation,
                  context, StationEvaluationRoute),
              Drawer_Items(Icons.handshake_outlined, Translations.of(context)!.Loyalty_System, context, LoyaltySystemRoute),
              Drawer_Items(Icons.wallet, Translations.of(context)!.Electronic_Wallet, context, BalanceRoute),
