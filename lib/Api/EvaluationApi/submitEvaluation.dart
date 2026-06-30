@@ -26,14 +26,14 @@ Future<bool?> submitEvaluation(BuildContext context,SubmitEvaluationModel model)
         if (response.statusCode == 200) {
           Map valueMap = jsonDecode(response.body);
           if (valueMap['code'] == 200) {
-            print( " fn_WalletRequest200 ::: ${valueMap['message']} ${valueMap['data']}");
-            await AlertView(context, "success", Translations.of(context)!.Ok,valueMap['data']['message']);
+            print( " fn_submitEvaluation200 ::: ${valueMap['message']} ${valueMap['data']}");
+            await AlertView(context, "success", Translations.of(context)!.Ok,Translations.of(context)!.success_msg);
             return  true;
           }
           else {
             await AlertView(
                 context, "error", Translations.of(context)!.ErrorTitle,valueMap['data'].toString());
-            print( "fn_WalletRequest400 ::: ${valueMap['message']} ${valueMap['data']}");
+            print( "fn_submitEvaluation400 ::: ${valueMap['message']} ${valueMap['data']}");
             return null;
           }
         }
@@ -41,7 +41,7 @@ Future<bool?> submitEvaluation(BuildContext context,SubmitEvaluationModel model)
           await AlertView(
               context, "error", Translations.of(context)!.ErrorTitle,
               "error_statusCode ${response.statusCode} ${response.reasonPhrase}");
-          print( "fn_LWalletRequeststatusCode400 ::: ${response.statusCode} ");
+          print( "fn_LsubmitEvaluationstatusCode400 ::: ${response.statusCode} ");
           return null;
         }
       } catch (e) {
@@ -53,7 +53,7 @@ Future<bool?> submitEvaluation(BuildContext context,SubmitEvaluationModel model)
       await AlertView(
           context, "error", Translations.of(context)!.ErrorTitle,
           Translations.of(context)!.CheckInternet);
-      print("fn_ConvertPointsException ::: checkInternet ");
+      print("fn_submitEvaluationException ::: checkInternet ");
       return null;
     }
   }
@@ -61,7 +61,7 @@ Future<bool?> submitEvaluation(BuildContext context,SubmitEvaluationModel model)
     await AlertView(
         context, "error", Translations.of(context)!.ErrorTitle,
         "Exception : ${e.toString()}");
-    print("fn_ConvertPointsException ::: ${e} ");
+    print("fn_submitEvaluationException ::: ${e} ");
     return null;
   }
 }

@@ -37,7 +37,7 @@ class QuestionCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withOpacity(0.1),
             blurRadius: 10,
             offset: Offset(0, 2),
           ),
@@ -84,7 +84,7 @@ class QuestionCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                       question.question,
-                      style: Style.MainText14_Bold
+                      style: Style.MainText15Bold
                   ),
                 ),
               ],
@@ -118,7 +118,7 @@ class QuestionCard extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 1.5.h),
                   decoration: BoxDecoration(
                     color: question.answer == "true"
-                        ? Style.SecondryColor.withOpacity(0.15)
+                        ? Style.SecondryColor.withOpacity(0.05)
                         : Colors.grey.withOpacity(0.05),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
@@ -147,7 +147,7 @@ class QuestionCard extends StatelessWidget {
                           color: question.answer == "true"
                               ? Style.SecondryColor
                               : Style.GreyColor,
-                          fontSize: 13.sp,
+                          fontSize: 15.sp,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -196,7 +196,7 @@ class QuestionCard extends StatelessWidget {
                           color: question.answer == "false"
                               ? Colors.red
                               : Style.GreyColor,
-                          fontSize: 13.sp,
+                          fontSize: 15.sp,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -219,7 +219,7 @@ class QuestionCard extends StatelessWidget {
                 ? Translations.of(context)!.writeThanksMessage
                 : Translations.of(context)!.writeSuggestion,
             hintStyle: TextStyle(
-              color: Style.GreyColor.withOpacity(0.5),
+              color: Style.GreyColor.withOpacity(0.8),
               fontSize: 15.sp,
             ),
             filled: true,
@@ -239,7 +239,7 @@ class QuestionCard extends StatelessWidget {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(
-                color: Style.MainColor,
+                color: Style.SecondryColor,
                 width: 1.5,
               ),
             ),
@@ -268,12 +268,12 @@ class QuestionCard extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? Style.MainColor.withOpacity(0.1)
+                      ? Style.SecondryColor.withOpacity(0.05)
                       : Colors.grey.withOpacity(0.03),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
                     color: isSelected
-                        ? Style.MainColor
+                        ? Style.SecondryColor
                         : Colors.grey.withOpacity(0.15),
                     width: 1.5,
                   ),
@@ -285,7 +285,7 @@ class QuestionCard extends StatelessWidget {
                           ? Icons.radio_button_checked
                           : Icons.radio_button_off,
                       color: isSelected
-                          ? Style.MainColor
+                          ? Style.SecondryColor
                           : Style.GreyColor,
                       size: 2.5.h,
                     ),
@@ -294,9 +294,9 @@ class QuestionCard extends StatelessWidget {
                       choice.name,
                       style: TextStyle(
                         color: isSelected
-                            ? Style.MainColor
+                            ? Style.SecondryColor
                             : Style.MainTextColor,
-                        fontSize: 12.sp,
+                        fontSize: 15.sp,
                         fontWeight: isSelected
                             ? FontWeight.bold
                             : FontWeight.normal,
@@ -313,7 +313,8 @@ class QuestionCard extends StatelessWidget {
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(5, (index) {
-            final selected = question.answer == "${index + 1}";
+            final rating = int.tryParse(question.answer ?? "0") ?? 0;
+            final selected = index + 1 <= rating;
             return GestureDetector(
               onTap: () => onRateAnswer(
                 question.questionId,
@@ -345,15 +346,15 @@ class QuestionCard extends StatelessWidget {
               onTap: () => onEmojiAnswer(question.questionId, value),
               child: AnimatedContainer(
                 duration: Duration(milliseconds: 250),
-                padding: EdgeInsets.all(1.5.h),
+                padding: EdgeInsets.symmetric(horizontal: 2.0.w,vertical: 0.0.h),
                 decoration: BoxDecoration(
                   color: selected
-                      ? Style.MainColor.withOpacity(0.15)
+                      ? Style.SecondryColor.withOpacity(0.2)
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(30),
                   border: selected
                       ? Border.all(
-                    color: Style.MainColor.withOpacity(0.3),
+                    color: Style.SecondryColor.withOpacity(0.3),
                     width: 2,
                   )
                       : null,
@@ -370,7 +371,45 @@ class QuestionCard extends StatelessWidget {
         );
 
       default:
-        return SizedBox();
+        return TextFormField(
+          initialValue: question.answer,
+          maxLines: 3,
+          decoration: InputDecoration(
+            hintText: Translations.of(context)!.writeSuggestion,
+            hintStyle: TextStyle(
+              color: Style.GreyColor.withOpacity(0.8),
+              fontSize: 15.sp,
+            ),
+            filled: true,
+            fillColor: Colors.grey.withOpacity(0.05),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(
+                color: Colors.grey.withOpacity(0.2),
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(
+                color: Colors.grey.withOpacity(0.2),
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(
+                color: Style.SecondryColor,
+                width: 1.5,
+              ),
+            ),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 4.w,
+              vertical: 1.5.h,
+            ),
+          ),
+          onChanged: (value) {
+            onTextAnswer(question.questionId, value);
+          },
+        );
 
     }
 

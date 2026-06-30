@@ -10,6 +10,7 @@ import '../../Api/EvaluationApi/getEvaluation.dart';
 import '../../Api/EvaluationApi/submitEvaluation.dart';
 import '../../Api/stations_servicesApi.dart';
 import '../../Constans/Style.dart';
+import '../../Routes/route_constants.dart';
 
 class StationEvaluationViewModel extends ChangeNotifier {
 
@@ -400,6 +401,7 @@ class StationEvaluationViewModel extends ChangeNotifier {
 
     if (result == true) {
       clearAfterSubmit();
+      Navigator.pushNamedAndRemoveUntil(context, homeRoute,(Route<dynamic> r)=>false);
       return true;
     }
 

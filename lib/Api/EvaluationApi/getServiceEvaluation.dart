@@ -16,41 +16,35 @@ Future<EvaluationModel?> getServiceEvaluation(BuildContext context, int serviceI
     bool InternetConntected = await hasNetwork();
     if (InternetConntected) {
       try {
-        var lang= LanguageData.languageData;
+        var lang = LanguageData.languageData;
         print(lang);
         Map<String, String> dataa = {
-            "lang": lang,
-          };
-      final response = await Get_Data(
-        "${evaluations_service}$serviceId",
-        dataa,
-      );
+          "lang": lang,
+        };
+        final response = await Get_Data(
+          "${evaluations_service}$serviceId",
+          dataa,
+        );
 
-      print(response.body);
+        print(response.body);
 
-
-        if (response.statusCode == 200) {
-          Map valueMap = jsonDecode(response.body);
-          if (valueMap['code'] == 200) {
-            final model = EvaluationModel.fromJson(valueMap['data']);
-            return model;
-          }
-          else {
-            await AlertView(
-                context, "error", Translations.of(context)!.ErrorTitle,valueMap['data'].toString());
-            print( "fn_getServiceEvaluation400 ::: ${valueMap['message']} ${valueMap['data']}");
-            return null;
-          }
+        Map valueMap = jsonDecode(response.body);
+        if (valueMap['code'] == 200) {
+          final model = EvaluationModel.fromJson(valueMap['data']);
+          return model;
         }
         else {
           await AlertView(
               context, "error", Translations.of(context)!.ErrorTitle,
-              "error_statusCode ${response.statusCode} ${response.reasonPhrase}");
-          print( "fn_getServiceEvaluationstatusCode400 ::: ${response.statusCode} ");
+              valueMap['message'].toString());
+          print(
+              "fn_getServiceEvaluation400 ::: ${valueMap['message']} ${valueMap['data']}");
           return null;
         }
       } catch (e) {
-
+        await AlertView(
+            context, "error", Translations.of(context)!.ErrorTitle,
+            "Exception : ${e.toString()}");
         return null;
       }
     }

@@ -8,6 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../Api/EvaluationApi/getServiceEvaluation.dart';
 import '../../Api/EvaluationApi/submitEvaluation.dart';
 import '../../Api/SetvicesApi.dart';
+import '../../Routes/route_constants.dart';
 
 class ServiceEvaluationViewModel extends ChangeNotifier {
 
@@ -405,6 +406,8 @@ class ServiceEvaluationViewModel extends ChangeNotifier {
 
     if (result == true) {
       clearAfterSubmit();
+      Navigator.pushNamedAndRemoveUntil(context, homeRoute,(Route<dynamic> r)=>false);
+
       return true;
     }
 

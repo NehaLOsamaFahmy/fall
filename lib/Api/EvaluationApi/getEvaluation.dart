@@ -27,9 +27,6 @@ Future<EvaluationModel?> getEvaluation(BuildContext context, int stationId) asyn
       );
 
       print(response.body);
-
-
-        if (response.statusCode == 200) {
           Map valueMap = jsonDecode(response.body);
           if (valueMap['code'] == 200) {
             final model = EvaluationModel.fromJson(valueMap['data']);
@@ -37,20 +34,15 @@ Future<EvaluationModel?> getEvaluation(BuildContext context, int stationId) asyn
           }
           else {
             await AlertView(
-                context, "error", Translations.of(context)!.ErrorTitle,valueMap['data'].toString());
-            print( "fn_WalletRequest400 ::: ${valueMap['message']} ${valueMap['data']}");
+                context, "error", Translations.of(context)!.ErrorTitle,valueMap['message'].toString());
+            print( "fn_Request400 ::: ${valueMap['message']} ${valueMap['data']}");
             return null;
           }
-        }
-        else {
-          await AlertView(
-              context, "error", Translations.of(context)!.ErrorTitle,
-              "error_statusCode ${response.statusCode} ${response.reasonPhrase}");
-          print( "fn_LWalletRequeststatusCode400 ::: ${response.statusCode} ");
-          return null;
-        }
-      } catch (e) {
 
+      } catch (e) {
+        await AlertView(
+            context, "error", Translations.of(context)!.ErrorTitle,
+            "Exception : ${e.toString()}");
         return null;
       }
     }

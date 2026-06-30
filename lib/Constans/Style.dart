@@ -58,8 +58,8 @@ class Style {
       color: MainTextColor, fontSize: 16.0.sp, fontWeight: FontWeight.bold);
   static TextStyle MainText14Bold = TextStyle(
       color: MainTextColor, fontSize: 16.0.sp, fontWeight: FontWeight.bold);
-  static TextStyle MainText14_Bold = TextStyle(
-      color: MainTextColor, fontSize: 14.0.sp, fontWeight: FontWeight.bold);
+  static TextStyle MainText15Bold = TextStyle(
+      color: MainTextColor, fontSize: 15.0.sp, fontWeight: FontWeight.bold);
   static TextStyle MainText25 = TextStyle(
       color: MainTextColor, fontSize: 25.0.sp);
   static TextStyle MainText20 = TextStyle(
