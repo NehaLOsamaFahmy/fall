@@ -99,7 +99,7 @@ class CustomDropdownButton2<T> extends StatelessWidget {
         onChanged: onChanged,
         selectedItemBuilder: selectedItemBuilder,
         buttonStyleData: ButtonStyleData(
-          //height: buttonHeight ?? 40,
+          height: buttonHeight ?? 3.5.h,
           // width: buttonWidth ?? 140,
           padding: EdgeInsets.zero,
           decoration: buttonDecoration ??

@@ -10,6 +10,13 @@ class ServicesModel {
   bool? selected;
   List<ServicesDetailsModel> details=<ServicesDetailsModel>[];
 
+  @override
+  String toString() {
+    if(name != null && name!.isNotEmpty)
+      return name!;
+    else
+      return"";// Return the property you want to display
+  }
 
   ServicesModel(this.id, this.name, this.icon,this.selected,this.details);
 

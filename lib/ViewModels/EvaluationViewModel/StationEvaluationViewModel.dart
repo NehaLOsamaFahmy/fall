@@ -1,4 +1,5 @@
 
+import 'package:babco/Localization/Translations.dart';
 import 'package:babco/Models/EvaluationModel.dart';
 import 'package:babco/Models/PinDataModel.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../Api/EvaluationApi/getEvaluation.dart';
 import '../../Api/EvaluationApi/submitEvaluation.dart';
 import '../../Api/stations_servicesApi.dart';
+import '../../Constans/Style.dart';
 
 class StationEvaluationViewModel extends ChangeNotifier {
 
@@ -66,10 +68,7 @@ class StationEvaluationViewModel extends ChangeNotifier {
   // Select Station
   //----------------------------------------------------
 
-  Future selectStation(
-      BuildContext context,
-      PinDataModel? station,
-      ) async {
+  Future selectStation(BuildContext context, PinDataModel? station,) async {
 
     selectedStation = station;
 
@@ -89,10 +88,7 @@ class StationEvaluationViewModel extends ChangeNotifier {
   // Load Evaluation
   //----------------------------------------------------
 
-  Future loadEvaluation(
-      BuildContext context,
-      int stationId,
-      ) async {
+  Future loadEvaluation(BuildContext context, int stationId,) async {
 
     loading = true;
 
@@ -159,9 +155,7 @@ class StationEvaluationViewModel extends ChangeNotifier {
   //----------------------------------------------------
 
   QuestionModel getQuestion(int index) {
-
     return evaluation!.questions[index];
-
   }
 
   //----------------------------------------------------
@@ -383,8 +377,9 @@ class StationEvaluationViewModel extends ChangeNotifier {
 
     if (!validateAnswers()) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("\u0628\u0631\u062C\u0627\u0621 \u0627\u0644\u0625\u062C\u0627\u0628\u0629 \u0639\u0644\u0649 \u062C\u0645\u064A\u0639 \u0627\u0644\u0623\u0633\u0626\u0644\u0629"),
+         SnackBar(
+          content: Text(Translations.of(context)!.AnswerValidation, style:Style.Header4),
+
         ),
       );
       return false;

@@ -186,5 +186,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "scanQr": MessageLookupByLibrary.simpleMessage("امسح رمز ال Qr للتقييم"),
     "Station_Evaluation": MessageLookupByLibrary.simpleMessage("تقييم المحطات"),
     "search": MessageLookupByLibrary.simpleMessage("بحث"),
+    "AnswerValidation": MessageLookupByLibrary.simpleMessage("برجاء الاجابه علي جميع الاسئلة"),
+    "yes": MessageLookupByLibrary.simpleMessage("نعم"),
+    "no": MessageLookupByLibrary.simpleMessage("لا"),
+    "writeSuggestion": MessageLookupByLibrary.simpleMessage("اكتب اقتراحك..."),
+    "writeThanksMessage": MessageLookupByLibrary.simpleMessage("اكتب رسالة الشكر..."),
+    "submitEvaluation": MessageLookupByLibrary.simpleMessage("إرسال التقييم"),
+    "evaluationSentSuccessfully": MessageLookupByLibrary.simpleMessage("تم إرسال التقييم بنجاح"),
   };
 }

@@ -29,6 +29,7 @@ const String resend_verification ="customers/resend-verification";
 const String ContactData ="contact/getConnectLinks";
 const String evaluations_store ="evaluations/store";
 const String evaluations_station ="evaluations/station/";
+const String evaluations_service ="evaluations/service/";
 
 
 

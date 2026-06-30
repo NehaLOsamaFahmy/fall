@@ -1007,6 +1007,47 @@ String get verificationCode {
       'search',
       name: 'search',
     );
+  }  String get AnswerValidation {
+    return Intl.message(
+      'AnswerValidation',
+      name: 'AnswerValidation',
+    );
+  }
+  String get yes {
+    return Intl.message(
+      'yes',
+      name: 'yes',
+    );
+  }
+  String get no {
+    return Intl.message(
+      'no',
+      name: 'no',
+    );
+  }
+  String get writeSuggestion {
+    return Intl.message(
+      'writeSuggestion',
+      name: 'writeSuggestion',
+    );
+  }
+  String get writeThanksMessage {
+    return Intl.message(
+      'writeThanksMessage',
+      name: 'writeThanksMessage',
+    );
+  }
+  String get submitEvaluation {
+    return Intl.message(
+      'submitEvaluation',
+      name: 'submitEvaluation',
+    );
+  }
+  String get evaluationSentSuccessfully {
+    return Intl.message(
+      'evaluationSentSuccessfully',
+      name: 'evaluationSentSuccessfully',
+    );
   }
 
 }

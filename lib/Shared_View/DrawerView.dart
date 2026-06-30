@@ -147,6 +147,9 @@ DrawerList(BuildContext context,{int id=0})
              Drawer_Items(Icons.star_rate_outlined,
                  Translations.of(context)!.Station_Evaluation,
                  context, StationEvaluationRoute),
+             Drawer_Items(Icons.star_rate_rounded,
+                 Translations.of(context)!.Service_Evaluation,
+                 context, ServiceEvaluationRoute),
              Drawer_Items(Icons.handshake_outlined, Translations.of(context)!.Loyalty_System, context, LoyaltySystemRoute),
              Drawer_Items(Icons.wallet, Translations.of(context)!.Electronic_Wallet, context, BalanceRoute),
 

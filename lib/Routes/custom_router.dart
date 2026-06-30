@@ -1,5 +1,6 @@
 
 import 'package:babco/Models/DelegateDataModel.dart';
+import 'package:babco/Views/Evaluation/ServiceEvaluationPage.dart';
 import 'package:babco/Views/Evaluation/StationEvaluationPage.dart';
 import 'package:babco/Views/LoginPages/otp_code_page.dart';
 import 'package:babco/Views/LoginPages/register_page.dart';
@@ -153,6 +154,10 @@ class CustomRouter {
         case StationEvaluationRoute:
         {
           return MaterialPageRoute(builder: (_) => StationEvaluationPage());
+        }
+        case ServiceEvaluationRoute:
+        {
+          return MaterialPageRoute(builder: (_) => ServiceEvaluationPage());
         }
         case NewOfferRoute:
         {

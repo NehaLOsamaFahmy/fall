@@ -13,7 +13,13 @@ class PinDataModel {
   String? region_id;
 
 
-
+  @override
+  String toString() {
+    if(name != null && name!.isNotEmpty)
+      return name!;
+    else
+      return"";// Return the property you want to display
+  }
   PinDataModel(this.id, this.name,
       this.address,this.phone,this.rate,
       this.lat,this.lng,this.images ,this.mail);

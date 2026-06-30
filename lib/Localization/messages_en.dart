@@ -185,5 +185,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "scanQr": MessageLookupByLibrary.simpleMessage("Scan Qr Code For Evaluation"),
     "Station_Evaluation": MessageLookupByLibrary.simpleMessage("Station Evaluation"),
     "search": MessageLookupByLibrary.simpleMessage("search"),
+    "AnswerValidation": MessageLookupByLibrary.simpleMessage("Please answer all the questions."),
   };
 }
