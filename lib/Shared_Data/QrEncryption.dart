@@ -17,11 +17,17 @@ class QrEncryption {
   static String encrypt({
     required int userId,
     required String points,
+    required String userName,
+    required String userPhone,
+    required String userEmail,
   }) {
 
     final jsonData = jsonEncode({
       "userId": userId,
       "points": points,
+      "userName": userName,
+      "userPhone": userPhone,
+      "userEmail": userEmail,
       "time": DateTime.now().millisecondsSinceEpoch
     });
 

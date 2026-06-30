@@ -174,6 +174,9 @@ class _AboutUsPageState extends State<LoyaltySystemPage> {
       qrData = QrEncryption.encrypt(
       userId: DelegateData.delegateData!.id!,
       points: BalancePointData.Point,
+      userEmail: DelegateData.delegateData!.email!,
+      userName: DelegateData.delegateData!.name!,
+      userPhone: DelegateData.delegateData!.mobile!,
     );
     });
   }
