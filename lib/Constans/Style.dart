@@ -348,6 +348,8 @@ static BoxDecoration SecondryColorDecoration = BoxDecoration(
 
   static LinearGradient LinearGradient1 = LinearGradient(
       colors: [Style.MainColor2, Style.SecondryColor]);
+  static LinearGradient Tab = LinearGradient(
+      colors: [Style.MainColor, Style.MainColor.withOpacity(0.7),Style.MainColor,]);
   static Container VerticalLine = Container(
     margin: EdgeInsets.symmetric(horizontal: 2.0.w),
     width: 0.5.w,

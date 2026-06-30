@@ -2,6 +2,8 @@
 import 'package:babco/Models/EvaluationModel.dart';
 import 'package:babco/Models/PinDataModel.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../Api/EvaluationApi/getEvaluation.dart';
 import '../../Api/EvaluationApi/submitEvaluation.dart';
@@ -9,22 +11,23 @@ import '../../Api/stations_servicesApi.dart';
 
 class StationEvaluationViewModel extends ChangeNotifier {
 
-  /// Loading
   bool loading = false;
 
-  /// Tabs
   int currentTab = 0;
 
-  /// Stations
   List<PinDataModel> stations = [];
 
   PinDataModel? selectedStation;
 
-  /// Evaluation
   EvaluationModel? evaluation;
 
-  /// Controllers
   final TextEditingController qrController = TextEditingController();
+
+  final MobileScannerController qrScannerController = MobileScannerController();
+
+  String? qrResult;
+
+  bool qrScanning = true;
 
   //----------------------------------------------------
   // Change Tab
@@ -32,6 +35,15 @@ class StationEvaluationViewModel extends ChangeNotifier {
 
   void changeTab(int index) {
     currentTab = index;
+
+    if (index == 1) {
+      qrScanning = true;
+      qrResult = null;
+      qrScannerController.start();
+    } else {
+      qrScannerController.stop();
+    }
+
     notifyListeners();
   }
 
@@ -95,6 +107,46 @@ class StationEvaluationViewModel extends ChangeNotifier {
 
     notifyListeners();
 
+  }
+
+  //----------------------------------------------------
+  // QR Scan
+  //----------------------------------------------------
+
+  Future<void> onQrDetect(BuildContext context, BarcodeCapture capture) async {
+
+    for (final barcode in capture.barcodes) {
+
+      if (barcode.rawValue == null) continue;
+
+      await qrScannerController.stop();
+
+      qrScanning = false;
+      qrResult = barcode.rawValue;
+
+      notifyListeners();
+      try {
+        await launchUrl(
+          Uri.parse(barcode.rawValue!),
+          mode: LaunchMode.inAppBrowserView,
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("رابط غير صالح")),
+        );
+      }
+
+      return;
+
+    }
+
+  }
+
+  Future<void> restartQrScanner() async {
+    qrResult = null;
+    qrScanning = true;
+    await qrScannerController.start();
+    notifyListeners();
   }
 
   //----------------------------------------------------
@@ -166,7 +218,6 @@ class StationEvaluationViewModel extends ChangeNotifier {
           (e) => e.questionId == questionId,
     );
 
-    /// الباك اند طالب اسم الاختيار
     question.answer = choice.name;
 
     notifyListeners();
@@ -259,22 +310,22 @@ class StationEvaluationViewModel extends ChangeNotifier {
 
     switch (value) {
       case 1:
-        return "😡";
+        return "\u{1F621}";
 
       case 2:
-        return "🙁";
+        return "\u{1F641}";
 
       case 3:
-        return "😐";
+        return "\u{1F610}";
 
       case 4:
-        return "😊";
+        return "\u{1F60A}";
 
       case 5:
-        return "😍";
+        return "\u{1F60D}";
 
       default:
-        return "😐";
+        return "\u{1F610}";
     }
   }
   //----------------------------------------------------
@@ -328,7 +379,7 @@ class StationEvaluationViewModel extends ChangeNotifier {
     if (!validateAnswers()) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text("برجاء الإجابة على جميع الأسئلة"),
+          content: Text("\u0628\u0631\u062C\u0627\u0621 \u0627\u0644\u0625\u062C\u0627\u0628\u0629 \u0639\u0644\u0649 \u062C\u0645\u064A\u0639 \u0627\u0644\u0623\u0633\u0626\u0644\u0629"),
         ),
       );
       return false;
@@ -396,6 +447,7 @@ class StationEvaluationViewModel extends ChangeNotifier {
   @override
   void dispose() {
     qrController.dispose();
+    qrScannerController.dispose();
     super.dispose();
   }
 }
