@@ -27,7 +27,7 @@ AlertView(BuildContext context, String image,  String Title, String Description,
             }
             else {
               try {
-                StoreRedirect.redirect(androidAppId: "com.raitotec.gas_services_new_demo",
+                StoreRedirect.redirect(androidAppId: "com.raitotec.fall",
                     iOSAppId: "585027354");
               }
               catch (e) {
